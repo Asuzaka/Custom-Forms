@@ -2,7 +2,7 @@ import type { NavigateOptions } from "react-router-dom";
 
 import { HeroUIProvider } from "@heroui/react";
 import { Route, Routes, useHref, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { Home } from "./pages";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -12,13 +12,12 @@ declare module "@react-types/shared" {
 
 export default function App() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   return (
     <HeroUIProvider navigate={navigate} useHref={useHref}>
       {/* Your app here... */}
       <Routes>
-        <Route path="/" element={<div>{t("hello")}</div>} />
+        <Route index element={<Home />} />
         {/* ... */}
       </Routes>
     </HeroUIProvider>
