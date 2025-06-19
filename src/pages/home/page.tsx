@@ -16,6 +16,13 @@ import {
   SelectItem,
   type SelectedItems,
   CardBody,
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  getKeyValue,
 } from "@heroui/react";
 import { useTheme } from "@heroui/use-theme";
 
@@ -42,6 +49,62 @@ export const langs = [
   {
     key: "uz",
     name: "Uz",
+  },
+];
+const rows = [
+  {
+    key: "1",
+    title: "Customer Feedback Form",
+    author: "John Doe",
+    likes: "89",
+    submissions: "432",
+  },
+  {
+    key: "2",
+    title: "Event Registration",
+    author: "Jane Smith",
+    likes: "76",
+    submissions: "315",
+  },
+  {
+    key: "3",
+    title: "Job Application",
+    author: "Mike Johnson",
+    likes: "67",
+    submissions: "281",
+  },
+  {
+    key: "4",
+    title: "Product Order Form",
+    author: "Sarah Williams",
+    likes: "54",
+    submissions: "198",
+  },
+  {
+    key: "5",
+    title: "Contact Form",
+    author: "Alex Brown",
+    likes: "48",
+    submissions: "176",
+  },
+];
+
+const columns = [
+  {
+    key: "title",
+    label: "Title",
+  },
+  {
+    key: "author",
+    label: "Author",
+  },
+  {
+    key: "likes",
+    label: "Likes",
+  },
+  {
+    key: "submissions",
+    label: "Submissions",
   },
 ];
 
@@ -148,8 +211,9 @@ export function Page() {
         </NavbarContent>
       </Navbar>
 
-      <main className="m-auto flex max-w-5xl items-center justify-center">
-        <div className="grid grid-cols-3 gap-5 px-6 pt-10">
+      <main className="m-auto max-w-5xl px-6">
+        <h1 className="mt-10 text-3xl font-bold">Latest Templates</h1>
+        <div className="grid grid-cols-3 gap-5 py-10">
           {Array.from({ length: 6 }).map((_, index) => (
             <Card
               key={index}
@@ -195,6 +259,25 @@ export function Page() {
               </CardFooter>
             </Card>
           ))}
+        </div>
+        <h1 className="text-3xl font-bold">Popular Templates</h1>
+        <div className="py-10">
+          <Table aria-label="Example table with dynamic content">
+            <TableHeader columns={columns}>
+              {(column) => (
+                <TableColumn key={column.key}>{column.label}</TableColumn>
+              )}
+            </TableHeader>
+            <TableBody items={rows}>
+              {(item) => (
+                <TableRow key={item.key}>
+                  {(columnKey) => (
+                    <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                  )}
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
       </main>
     </>
