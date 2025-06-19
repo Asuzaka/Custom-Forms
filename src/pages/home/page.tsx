@@ -1,20 +1,7 @@
 import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  Input,
-  DropdownItem,
-  DropdownTrigger,
-  Dropdown,
-  DropdownMenu,
-  Avatar,
   Card,
   Image,
   CardFooter,
-  Switch,
-  Select,
-  SelectItem,
-  type SelectedItems,
   CardBody,
   Table,
   TableHeader,
@@ -25,40 +12,15 @@ import {
   getKeyValue,
   Link,
   Button,
-  type Selection,
 } from "@heroui/react";
-import { useTheme } from "@heroui/use-theme";
 
-import {
-  Calendar,
-  MoonIcon,
-  NotebookPenIcon,
-  Search,
-  SunMediumIcon,
-  TagIcon,
-  User,
-} from "lucide-react";
-import { useState } from "react";
+import { Calendar, TagIcon, User } from "lucide-react";
+import { Navbar } from "../../widgets";
 
-type Lang = {
-  key: string;
-  name: string;
-};
 type Tag = {
   name: string;
   count: number;
 };
-
-const langs = [
-  {
-    key: "ru",
-    name: "Ru",
-  },
-  {
-    key: "uz",
-    name: "Uz",
-  },
-];
 const rows = [
   {
     key: "1",
@@ -200,120 +162,9 @@ const tags: Tag[] = [
 ];
 
 export function Page() {
-  const [selectedLang, setSelectedLang] = useState<Set<string>>(
-    new Set(["uz"]),
-  );
-  const previousSelectedKey = [...selectedLang][0];
-  const { setTheme } = useTheme();
-  const [isSelected, setIsSelected] = useState(false);
-
-  const handleSelectionChange = (keys: Selection) => {
-    if (keys === "all") return;
-
-    const newKey = [...keys][0];
-
-    if (!newKey || newKey === previousSelectedKey) {
-      setSelectedLang(new Set([previousSelectedKey]));
-    } else {
-      setSelectedLang(new Set([String(newKey)]));
-    }
-  };
-
   return (
     <>
-      <Navbar isBordered>
-        <NavbarContent justify="start">
-          <NavbarBrand className="mr-4">
-            <NotebookPenIcon />
-            <p className="hidden font-bold text-inherit sm:block">
-              Custom Forms
-            </p>
-          </NavbarBrand>
-
-          <Input
-            classNames={{
-              base: "max-w-full sm:max-w-[15rem] h-10",
-              mainWrapper: "h-full",
-              input: "text-small",
-              inputWrapper:
-                "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-            }}
-            placeholder="Search  Ctrl K"
-            size="sm"
-            startContent={<Search />}
-            type="search"
-          />
-        </NavbarContent>
-
-        <NavbarContent as="div" className="items-center" justify="end">
-          <Switch
-            isSelected={isSelected}
-            onValueChange={(e) => {
-              setIsSelected(e);
-              setTheme(isSelected === true ? "light" : "dark");
-            }}
-            defaultSelected
-            color="success"
-            endContent={<MoonIcon />}
-            size="lg"
-            startContent={<SunMediumIcon color="yellow" />}
-          />
-          {/* --- */}
-          <Select
-            aria-label="language"
-            selectedKeys={selectedLang}
-            onSelectionChange={handleSelectionChange}
-            classNames={{
-              base: "max-w-[70px]",
-              trigger: "h-10",
-            }}
-            items={langs}
-            renderValue={(items: SelectedItems<Lang>) => {
-              return items.map((item) => (
-                <div key={item.key} className="flex items-center gap-2">
-                  <span>{item.data?.name}</span>
-                </div>
-              ));
-            }}
-          >
-            {(lang) => (
-              <SelectItem key={lang.key} textValue={lang.name}>
-                <div className="flex items-center gap-2">
-                  <span>{lang.name}</span>
-                </div>
-              </SelectItem>
-            )}
-          </Select>
-          {/* --- */}
-          <Dropdown placement="bottom-end">
-            <DropdownTrigger>
-              <Avatar
-                isBordered
-                as="button"
-                className="transition-transform"
-                color="secondary"
-                name="Jason Hughes"
-                size="sm"
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-              />
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Profile Actions" variant="flat">
-              <DropdownItem key="profile" className="h-14 gap-2">
-                <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">zoey@example.com</p>
-              </DropdownItem>
-              <DropdownItem key="settings">My Forms</DropdownItem>
-              <DropdownItem key="help_and_feedback">
-                Help & Feedback
-              </DropdownItem>
-              <DropdownItem key="logout" color="danger">
-                Log Out
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </NavbarContent>
-      </Navbar>
-
+      <Navbar />
       <main className="m-auto max-w-5xl px-6">
         <h1 className="mt-10 text-3xl font-bold">Latest Templates</h1>
         <div className="grid grid-cols-3 gap-5 py-10">
