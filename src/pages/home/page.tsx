@@ -23,6 +23,9 @@ import {
   TableRow,
   TableCell,
   getKeyValue,
+  Link,
+  Button,
+  type Selection,
 } from "@heroui/react";
 import { useTheme } from "@heroui/use-theme";
 
@@ -32,6 +35,7 @@ import {
   NotebookPenIcon,
   Search,
   SunMediumIcon,
+  TagIcon,
   User,
 } from "lucide-react";
 import { useState } from "react";
@@ -40,8 +44,12 @@ type Lang = {
   key: string;
   name: string;
 };
+type Tag = {
+  name: string;
+  count: number;
+};
 
-export const langs = [
+const langs = [
   {
     key: "ru",
     name: "Ru",
@@ -108,12 +116,108 @@ const columns = [
   },
 ];
 
+const tags: Tag[] = [
+  {
+    name: "feedback",
+    count: 24,
+  },
+  {
+    name: "survey",
+    count: 18,
+  },
+  {
+    name: "customer",
+    count: 15,
+  },
+  {
+    name: "registration",
+    count: 12,
+  },
+  {
+    name: "event",
+    count: 10,
+  },
+  {
+    name: "application",
+    count: 9,
+  },
+  {
+    name: "job",
+    count: 8,
+  },
+  {
+    name: "contact",
+    count: 7,
+  },
+  {
+    name: "order",
+    count: 6,
+  },
+  {
+    name: "product",
+    count: 5,
+  },
+  {
+    name: "ecommerce",
+    count: 4,
+  },
+  {
+    name: "education",
+    count: 4,
+  },
+  {
+    name: "newsletter",
+    count: 3,
+  },
+  {
+    name: "subscription",
+    count: 3,
+  },
+  {
+    name: "payment",
+    count: 2,
+  },
+  {
+    name: "donation",
+    count: 2,
+  },
+  {
+    name: "booking",
+    count: 2,
+  },
+  {
+    name: "reservation",
+    count: 1,
+  },
+  {
+    name: "appointment",
+    count: 1,
+  },
+  {
+    name: "review",
+    count: 1,
+  },
+];
+
 export function Page() {
   const [selectedLang, setSelectedLang] = useState<Set<string>>(
     new Set(["uz"]),
   );
+  const previousSelectedKey = [...selectedLang][0];
   const { setTheme } = useTheme();
   const [isSelected, setIsSelected] = useState(false);
+
+  const handleSelectionChange = (keys: Selection) => {
+    if (keys === "all") return;
+
+    const newKey = [...keys][0];
+
+    if (!newKey || newKey === previousSelectedKey) {
+      setSelectedLang(new Set([previousSelectedKey]));
+    } else {
+      setSelectedLang(new Set([String(newKey)]));
+    }
+  };
 
   return (
     <>
@@ -134,7 +238,7 @@ export function Page() {
               inputWrapper:
                 "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
             }}
-            placeholder="Search   Ctrl K"
+            placeholder="Search  Ctrl K"
             size="sm"
             startContent={<Search />}
             type="search"
@@ -156,10 +260,9 @@ export function Page() {
           />
           {/* --- */}
           <Select
+            aria-label="language"
             selectedKeys={selectedLang}
-            onSelectionChange={(keys) => {
-              if (keys !== "all") setSelectedLang(keys as Set<string>);
-            }}
+            onSelectionChange={handleSelectionChange}
             classNames={{
               base: "max-w-[70px]",
               trigger: "h-10",
@@ -227,7 +330,7 @@ export function Page() {
                 <Image
                   alt="Woman listing to music"
                   className="object-cover"
-                  w-full
+                  w-full="true"
                   height="200px"
                   src="https://heroui.com/images/hero-card.jpeg"
                   width="100%"
@@ -243,7 +346,7 @@ export function Page() {
                     services
                   </p>
                   {/* Publisher */}
-                  <p className="flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1">
                       <User />
                       <span>John Doe</span>
@@ -252,7 +355,7 @@ export function Page() {
                       <Calendar />
                       <span>15.05.2025</span>
                     </div>
-                  </p>
+                  </div>
                   {/* Tags */}
                   <div></div>
                 </div>
@@ -278,6 +381,26 @@ export function Page() {
               )}
             </TableBody>
           </Table>
+        </div>
+        <h1 className="text-3xl font-bold">Tags</h1>
+        <div className="my-10 rounded-large bg-white p-6 shadow-small dark:bg-[#191a1b]">
+          <div className="flex flex-wrap gap-3">
+            {tags.map((tag) => (
+              <Button size="sm" variant="solid" key={crypto.randomUUID()}>
+                <Link
+                  color="foreground"
+                  key={tag.name}
+                  href={`/search?tag=${tag.name}`}
+                >
+                  <TagIcon size={tag.count >= 10 ? 16 : 12} className="mr-1" />
+                  {tag.name}
+                  <span className="ml-1.5 rounded-full bg-white px-1.5 py-0.5 text-xs dark:bg-[#191a1b]">
+                    {tag.count}
+                  </span>
+                </Link>
+              </Button>
+            ))}
+          </div>
         </div>
       </main>
     </>
