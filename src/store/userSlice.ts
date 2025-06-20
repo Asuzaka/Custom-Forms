@@ -4,12 +4,15 @@ import type { User } from "../entities";
 
 interface UserState {
   user: User | null;
-  isLoggedIn: boolean;
 }
 
 const initialState: UserState = {
-  user: null,
-  isLoggedIn: false,
+  user: {
+    id: "000",
+    username: "Admin",
+    email: "admin@email.co",
+    role: "admin",
+  },
 };
 
 const userSlice = createSlice({
@@ -18,11 +21,9 @@ const userSlice = createSlice({
   reducers: {
     setUser(state, action: PayloadAction<User>) {
       state.user = action.payload;
-      state.isLoggedIn = true;
     },
     logout(state) {
       state.user = null;
-      state.isLoggedIn = false;
     },
   },
 });
