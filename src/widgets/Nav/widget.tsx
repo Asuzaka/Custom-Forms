@@ -28,16 +28,16 @@ const langs: Lang[] = [
 ];
 
 import { useTheme } from "@heroui/use-theme";
-import { useState } from "react";
 import type { Lang } from "../../entities";
+import { useState } from "react";
 
 export function Widget() {
   const [selectedLang, setSelectedLang] = useState<Set<string>>(
     new Set(["uz"]),
   );
   const previousSelectedKey = [...selectedLang][0];
-  const { setTheme } = useTheme();
-  const [isSelected, setIsSelected] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [isSelected, setIsSelected] = useState(theme === "dark" ? true : false);
 
   const handleSelectionChange = (keys: Selection) => {
     if (keys === "all") return;
