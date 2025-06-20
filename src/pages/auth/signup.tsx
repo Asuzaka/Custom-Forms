@@ -36,7 +36,7 @@ export function SignUp() {
             <Form
               validationErrors={errors}
               onSubmit={onSubmit}
-              className="flex w-full max-w-xl flex-col gap-5"
+              className="flex w-full max-w-xl flex-col gap-4"
             >
               <Input
                 isRequired
@@ -97,6 +97,22 @@ export function SignUp() {
                 Sign up
               </Button>
             </Form>
+
+            <div>
+              <hr></hr>
+              <div className="mt-3 flex justify-between">
+                <Button color="primary" variant="bordered" className="w-[40%]">
+                  Google
+                </Button>
+                <Button
+                  color="secondary"
+                  variant="bordered"
+                  className="w-[40%]"
+                >
+                  Github
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </main>
