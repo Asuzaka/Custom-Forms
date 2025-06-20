@@ -1,26 +1,16 @@
 import { useState } from "react";
 import { Navbar } from "../../widgets";
 import { Button, Form, Input, Link } from "@heroui/react";
-import validator from "validator";
 
-export function SignUp() {
+export function SignIn() {
   const [errors, setErrors] = useState({});
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let any: boolean = false;
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
 
-    if (data.password !== data.passwordConfirm) {
-      setErrors((prev) => ({
-        ...prev,
-        passwordConfirm: "Passwords don't match",
-      }));
-      any = true;
-    }
-
-    if (any) return;
     console.log(data);
+    setErrors({});
   }
 
   return (
@@ -30,9 +20,9 @@ export function SignUp() {
         <div className="flex items-center justify-center py-25">
           <div className="flex flex-col gap-5">
             <h1 className="py-3 text-center text-4xl font-extrabold">
-              Sign up
+              Sign in
             </h1>
-            <p className="py-2 text-lg">Create an account to get started</p>
+            <p className="py-2 text-lg">Sign in to work with forms</p>
             <Form
               validationErrors={errors}
               onSubmit={onSubmit}
@@ -40,29 +30,15 @@ export function SignUp() {
             >
               <Input
                 isRequired
-                errorMessage="Please enter a valid username"
-                label="Username"
+                errorMessage="Please enter username or email"
+                label="Email or username"
                 labelPlacement="outside"
-                name="username"
-                placeholder="Enter your username"
+                name="uni"
+                placeholder="Enter your username or email"
                 type="text"
                 validate={(value: string) => {
                   if (value.length < 3)
-                    return "Username should at least be 3 characters";
-                }}
-              />
-
-              <Input
-                isRequired
-                errorMessage="Please enter a valid email"
-                label="Email"
-                labelPlacement="outside"
-                name="email"
-                placeholder="Enter your email"
-                type="email"
-                validate={(value: string) => {
-                  if (!validator.isEmail(value))
-                    return "Please enter a valid email";
+                    return "username lenght cannot be less than 3";
                 }}
               />
               <Input
@@ -79,22 +55,8 @@ export function SignUp() {
                   }
                 }}
               />
-              <Input
-                isRequired
-                errorMessage="Please enter a valid password Confirm"
-                label="Password Confirm"
-                labelPlacement="outside"
-                name="passwordConfirm"
-                placeholder="Re-Enter password"
-                type="password"
-                validate={(value: string) => {
-                  if (value.length < 7) {
-                    return "Passowd must be at least 3 characters long";
-                  }
-                }}
-              />
               <Button fullWidth color="primary" type="submit">
-                Sign up
+                Sign in
               </Button>
             </Form>
 
@@ -112,9 +74,10 @@ export function SignUp() {
                   Github
                 </Button>
               </div>
+
               <div className="mt-2 flex gap-2">
-                <p>Already have an account? </p>
-                <Link href="/signin"> Sign in</Link>
+                <p>Don't have an account? </p>
+                <Link href="/signup"> Sign up</Link>
               </div>
             </div>
           </div>

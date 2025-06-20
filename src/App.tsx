@@ -4,6 +4,7 @@ import { HeroUIProvider } from "@heroui/react";
 import { Route, Routes, useHref, useNavigate } from "react-router-dom";
 import { Home } from "./pages";
 import { SignUp } from "./pages/auth/signup";
+import { SignIn } from "./pages/auth/singin";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -20,6 +21,7 @@ export default function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
         {/* ... */}
       </Routes>
     </HeroUIProvider>
