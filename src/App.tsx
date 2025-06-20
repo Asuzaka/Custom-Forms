@@ -5,6 +5,8 @@ import { Route, Routes, useHref, useNavigate } from "react-router-dom";
 import { Home } from "./pages";
 import { SignUp } from "./pages/auth/signup";
 import { SignIn } from "./pages/auth/singin";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -16,14 +18,16 @@ export default function App() {
   const navigate = useNavigate();
 
   return (
-    <HeroUIProvider navigate={navigate} useHref={useHref}>
-      {/* Your app here... */}
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignIn />} />
-        {/* ... */}
-      </Routes>
-    </HeroUIProvider>
+    <Provider store={store}>
+      <HeroUIProvider navigate={navigate} useHref={useHref}>
+        {/* Your app here... */}
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
+          {/* ... */}
+        </Routes>
+      </HeroUIProvider>
+    </Provider>
   );
 }
