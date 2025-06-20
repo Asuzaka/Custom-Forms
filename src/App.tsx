@@ -1,12 +1,10 @@
 import type { NavigateOptions } from "react-router-dom";
 
 import { HeroUIProvider } from "@heroui/react";
-import { Route, Routes, useHref, useNavigate } from "react-router-dom";
-import { Dashboard, Home } from "./pages";
-import { SignUp, SignIn } from "./pages/";
+import { useHref, useNavigate } from "react-router";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import { Protected } from "./shared/components/Protected";
+import { Layout } from "./pages/layout";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -20,9 +18,10 @@ export default function App() {
   return (
     <Provider store={store}>
       <HeroUIProvider navigate={navigate} useHref={useHref}>
-        {/* Your app here... */}
+        <Layout />
+        {/* Your app here...
         <Routes>
-          <Route index element={<Home />} />
+          <Route index element={<Home />}></Route>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route
@@ -34,7 +33,7 @@ export default function App() {
             }
           />
           {/* ... */}
-        </Routes>
+        {/* </Routes> */}
       </HeroUIProvider>
     </Provider>
   );

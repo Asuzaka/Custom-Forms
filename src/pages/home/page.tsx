@@ -10,12 +10,11 @@ import {
   TableRow,
   TableCell,
   getKeyValue,
-  Link,
   Button,
 } from "@heroui/react";
 
 import { Calendar, TagIcon, User } from "lucide-react";
-import { Navbar } from "../../widgets";
+import { useNavigate } from "react-router";
 
 type Tag = {
   name: string;
@@ -162,98 +161,100 @@ const tags: Tag[] = [
 ];
 
 export function Page() {
+  const navigate = useNavigate();
   return (
     <>
-      <Navbar />
-      <main className="m-auto max-w-5xl px-6">
-        <h1 className="mt-10 text-3xl font-bold">Latest Templates</h1>
-        <div className="grid grid-cols-3 gap-5 py-10">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <Card
-              key={index}
-              isPressable
-              shadow="sm"
-              isFooterBlurred
-              className="flex min-w-[200px] border-none"
-              radius="lg"
-            >
-              <CardBody className="h-[50%] overflow-visible p-0">
-                <Image
-                  alt="Woman listing to music"
-                  className="object-cover"
-                  w-full="true"
-                  height="200px"
-                  src="https://heroui.com/images/hero-card.jpeg"
-                  width="100%"
-                />
-              </CardBody>
-              <CardFooter>
-                <div className="flex flex-col gap-2">
-                  {/* Forms Theme */}
-                  <h1 className="text-xl font-bold">Customer Feedback Form</h1>
-                  {/* Forms description */}
-                  <p className="font-thin">
-                    Collect feedback from customers about your products or
-                    services
-                  </p>
-                  {/* Publisher */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      <User />
-                      <span>John Doe</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Calendar />
-                      <span>15.05.2025</span>
-                    </div>
+      <h1 className="mt-10 text-3xl font-bold">Latest Templates</h1>
+      <div className="grid grid-cols-3 gap-5 py-10">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <Card
+            key={index}
+            isPressable
+            shadow="sm"
+            isFooterBlurred
+            className="flex min-w-[200px] border-none"
+            radius="lg"
+          >
+            <CardBody className="h-[50%] overflow-visible p-0">
+              <Image
+                alt="Woman listing to music"
+                className="object-cover"
+                w-full="true"
+                height="200px"
+                src="https://heroui.com/images/hero-card.jpeg"
+                width="100%"
+              />
+            </CardBody>
+            <CardFooter>
+              <div className="flex flex-col gap-2">
+                {/* Forms Theme */}
+                <h1 className="text-xl font-bold">Customer Feedback Form</h1>
+                {/* Forms description */}
+                <p className="font-thin">
+                  Collect feedback from customers about your products or
+                  services
+                </p>
+                {/* Publisher */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1">
+                    <User />
+                    <span>John Doe</span>
                   </div>
-                  {/* Tags */}
-                  <div></div>
+                  <div className="flex items-center">
+                    <Calendar />
+                    <span>15.05.2025</span>
+                  </div>
                 </div>
-              </CardFooter>
-            </Card>
+                {/* Tags */}
+                <div></div>
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+      <h1 className="text-3xl font-bold">Popular Templates</h1>
+      <div className="py-10">
+        <Table aria-label="Example table with dynamic content">
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key}>{column.label}</TableColumn>
+            )}
+          </TableHeader>
+          <TableBody items={rows}>
+            {(item) => (
+              <TableRow key={item.key}>
+                {(columnKey) => (
+                  <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <h1 className="text-3xl font-bold">Tags</h1>
+      <div className="my-10 rounded-large bg-white p-6 shadow-small dark:bg-[#191a1b]">
+        <div className="flex flex-wrap gap-3">
+          {tags.map((tag) => (
+            <Button
+              size="sm"
+              variant="solid"
+              key={crypto.randomUUID()}
+              onPress={() => navigate(`/search?tag=${tag.name}`)}
+            >
+              <div
+                className="flex cursor-pointer items-center text-sm"
+                key={tag.name}
+              >
+                <TagIcon size={tag.count >= 10 ? 16 : 12} className="mr-1" />
+                {tag.name}
+                <span className="ml-1.5 rounded-full bg-white px-1.5 py-0.5 text-xs dark:bg-[#191a1b]">
+                  {tag.count}
+                </span>
+              </div>
+            </Button>
           ))}
         </div>
-        <h1 className="text-3xl font-bold">Popular Templates</h1>
-        <div className="py-10">
-          <Table aria-label="Example table with dynamic content">
-            <TableHeader columns={columns}>
-              {(column) => (
-                <TableColumn key={column.key}>{column.label}</TableColumn>
-              )}
-            </TableHeader>
-            <TableBody items={rows}>
-              {(item) => (
-                <TableRow key={item.key}>
-                  {(columnKey) => (
-                    <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-                  )}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        <h1 className="text-3xl font-bold">Tags</h1>
-        <div className="my-10 rounded-large bg-white p-6 shadow-small dark:bg-[#191a1b]">
-          <div className="flex flex-wrap gap-3">
-            {tags.map((tag) => (
-              <Button size="sm" variant="solid" key={crypto.randomUUID()}>
-                <Link
-                  color="foreground"
-                  key={tag.name}
-                  href={`/search?tag=${tag.name}`}
-                >
-                  <TagIcon size={tag.count >= 10 ? 16 : 12} className="mr-1" />
-                  {tag.name}
-                  <span className="ml-1.5 rounded-full bg-white px-1.5 py-0.5 text-xs dark:bg-[#191a1b]">
-                    {tag.count}
-                  </span>
-                </Link>
-              </Button>
-            ))}
-          </div>
-        </div>
-      </main>
+      </div>
     </>
   );
 }
