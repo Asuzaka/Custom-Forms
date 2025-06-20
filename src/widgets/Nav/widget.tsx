@@ -15,6 +15,7 @@ import {
   type SelectedItems,
   type Selection,
 } from "@heroui/react";
+import { useNavigate } from "react-router";
 
 const langs: Lang[] = [
   {
@@ -32,6 +33,7 @@ import type { Lang } from "../../entities";
 import { useState } from "react";
 
 export function Widget() {
+  const navigate = useNavigate();
   const [selectedLang, setSelectedLang] = useState<Set<string>>(
     new Set(["uz"]),
   );
@@ -53,7 +55,10 @@ export function Widget() {
   return (
     <Navbar isBordered>
       <NavbarContent justify="start">
-        <NavbarBrand className="mr-4">
+        <NavbarBrand
+          className="mr-4 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           <NotebookPenIcon />
           <p className="hidden font-bold text-inherit sm:block">Custom Forms</p>
         </NavbarBrand>
