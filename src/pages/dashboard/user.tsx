@@ -71,26 +71,22 @@ const rows = [
   {
     key: "1",
     name: "Tony Reichert",
-    role: "CEO",
-    status: "Active",
+    date: "2025-10-2",
   },
   {
     key: "2",
     name: "Zoey Lang",
-    role: "Technical Lead",
-    status: "Paused",
+    date: "2023-8-4",
   },
   {
     key: "3",
     name: "Jane Fisher",
-    role: "Senior Developer",
-    status: "Active",
+    date: "2024-2-1",
   },
   {
     key: "4",
     name: "William Howard",
-    role: "Community Manager",
-    status: "Vacation",
+    date: "2025-7-15",
   },
 ];
 
@@ -177,7 +173,7 @@ export function UserDashboard() {
                   className="h-[140px] w-full object-cover"
                   radius="lg"
                   shadow="sm"
-                  src={`https://image.thum.io/get/width/800/https://lig-forms.netlify.app}`}
+                  src={`https://image.thum.io/get/width/800/https://lig-forms.netlify.app`}
                   width="100%"
                 />
               </CardBody>
@@ -203,8 +199,8 @@ export function UserDashboard() {
                 <TableCell>
                   <Library />
                 </TableCell>
-                <TableCell>Tony Reichert</TableCell>
-                <TableCell>CEO</TableCell>
+                <TableCell>{each.name}</TableCell>
+                <TableCell>{each.date}</TableCell>
                 <TableCell>
                   <Dropdown>
                     <DropdownTrigger>
