@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 
 export function Protected({ children }: { children: React.ReactNode }) {
   const { user } = useSelector((state: RootState) => state.user);

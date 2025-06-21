@@ -135,7 +135,12 @@ export function Widget() {
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">zoey@example.com</p>
             </DropdownItem>
-            <DropdownItem key="dashboard">Dashboard</DropdownItem>
+            <DropdownItem
+              onPress={() => navigate("/dashboard")}
+              key="dashboard"
+            >
+              Dashboard
+            </DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
             <DropdownItem key="logout" color="danger">
               Log Out
