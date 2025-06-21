@@ -14,6 +14,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
+  useDisclosure,
 } from "@heroui/react";
 import {
   ArrowDownZA,
@@ -26,111 +27,67 @@ import {
   Trash2,
 } from "lucide-react";
 import { useState } from "react";
+import { sort } from "../../shared/constants/Dashboard";
+import type { Form, ModalType, sortQuery } from "../../entities";
+import { ModalProvider } from "../../widgets";
+import { useNavigate } from "react-router";
 
-const staticForms = [
+const staticForms: Form[] = [
   {
-    id: "form_1",
-    title: "Customer Satisfaction Survey",
-    imageUrl:
-      "docs.google.com/forms/d/1EPKKGdZ3AO94owrND_7p64SUKQHk0XpPylwwlQmdQ2w/edit?usp=forms_home&ouid=113091791619201786820&ths=true",
-    createdAt: "2024-05-01T10:45:00Z",
+    id: "uuu--dwa-dwa",
+    title: "Customer Feedback Survey",
+    thumbail: "https://example.com/thumbs/survey1.jpg",
+    createdAt: new Date("2023-05-15T10:00:00Z"),
+    seen: new Date("2023-05-16T14:30:00Z"),
   },
   {
-    id: "form_2",
-    title: "Job Application Form",
-    imageUrl:
-      "docs.google.com/forms/d/1EPKKGdZ3AO94owrND_7p64SUKQHk0XpPylwwlQmdQ2w/edit?usp=forms_home&ouid=113091791619201786820&ths=true",
-    createdAt: "2024-05-12T14:20:00Z",
+    id: "aabawd===dwa--dwa",
+    title: "Employee Onboarding Form",
+    thumbail: "https://example.com/thumbs/onboarding.jpg",
+    createdAt: new Date("2023-06-01T09:15:00Z"),
+    seen: new Date("2023-06-02T11:20:00Z"),
   },
   {
-    id: "form_3",
+    id: "dwadsamxam;d",
+    title: "Product Satisfaction Questionnaire",
+    thumbail: "https://example.com/thumbs/product-feedback.jpg",
+    createdAt: new Date("2023-06-10T13:45:00Z"),
+    seen: new Date("2023-06-10T15:10:00Z"),
+  },
+  {
+    id: "klkkczlx;asda",
     title: "Event Registration",
-    imageUrl:
-      "docs.google.com/forms/d/1EPKKGdZ3AO94owrND_7p64SUKQHk0XpPylwwlQmdQ2w/edit?usp=forms_home&ouid=113091791619201786820&ths=true",
-    createdAt: "2024-06-03T08:15:00Z",
+    thumbail: "https://example.com/thumbs/event-reg.jpg",
+    createdAt: new Date("2023-06-15T08:30:00Z"),
+    seen: new Date("2023-06-16T10:00:00Z"),
   },
   {
-    id: "form_4",
-    title: "Feedback on Our Website",
-    imageUrl:
-      "docs.google.com/forms/d/1EPKKGdZ3AO94owrND_7p64SUKQHk0XpPylwwlQmdQ2w/edit?usp=forms_home&ouid=113091791619201786820&ths=true",
-    createdAt: "2024-06-10T17:50:00Z",
+    id: "dwaqwequijiocz",
+    title: "Website Usability Test",
+    thumbail: "https://example.com/thumbs/usability.jpg",
+    createdAt: new Date("2023-06-20T11:00:00Z"),
+    seen: new Date("2023-06-21T09:45:00Z"),
   },
   {
-    id: "form_5",
-    title: "Product Review Form",
-    imageUrl:
-      "docs.google.com/forms/d/1EPKKGdZ3AO94owrND_7p64SUKQHk0XpPylwwlQmdQ2w/edit?usp=forms_home&ouid=113091791619201786820&ths=true",
-    createdAt: "2024-06-20T09:30:00Z",
+    id: "querto-dasjwa",
+    title: "Monthly Subscription Preferences",
+    thumbail: "https://example.com/thumbs/subscription.jpg",
+    createdAt: new Date("2023-06-25T16:20:00Z"),
+    seen: new Date("2023-06-26T13:15:00Z"),
   },
 ];
 
 type View = "grid" | "table";
 
-const rows = [
-  {
-    key: "1",
-    name: "Tony Reichert",
-    date: "2025-10-2",
-  },
-  {
-    key: "2",
-    name: "Zoey Lang",
-    date: "2023-8-4",
-  },
-  {
-    key: "3",
-    name: "Jane Fisher",
-    date: "2024-2-1",
-  },
-  {
-    key: "4",
-    name: "William Howard",
-    date: "2025-7-15",
-  },
-];
-
-const sort = [
-  { key: 0, label: "sort by date" },
-  { key: 1, label: "sort by last seen date" },
-  {
-    key: 2,
-    label: "sort by title",
-  },
-];
-
-const actions = [
-  {
-    key: 0,
-    label: (
-      <span className="flex items-center gap-2">
-        <PencilLine />
-        Rename
-      </span>
-    ),
-  },
-  {
-    key: 1,
-    label: (
-      <span className="flex items-center gap-2 text-danger">
-        <Trash2 />
-        Delete
-      </span>
-    ),
-  },
-  {
-    key: 2,
-    label: (
-      <span className="flex items-center gap-2">
-        <ExternalLink />
-        Open
-      </span>
-    ),
-  },
-];
-
 export function UserDashboard() {
   const [view, setView] = useState<View>("grid");
+  const [sortQuery, setSortQuery] = useState<sortQuery>("");
+  const [selected, setSelected] = useState<string>("");
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [modalType, setModalType] = useState<ModalType>("");
+  const navigate = useNavigate();
+
+  const active = staticForms.find((each) => each.id === selected);
 
   return (
     <>
@@ -152,7 +109,12 @@ export function UserDashboard() {
             </DropdownTrigger>
             <DropdownMenu aria-label="Dynamic Actions" items={sort}>
               {(item) => (
-                <DropdownItem key={item.key}>{item.label}</DropdownItem>
+                <DropdownItem
+                  onPress={() => setSortQuery(item.query)}
+                  key={item.id}
+                >
+                  {item.name}
+                </DropdownItem>
               )}
             </DropdownMenu>
           </Dropdown>
@@ -165,7 +127,7 @@ export function UserDashboard() {
               key={index}
               isPressable
               shadow="sm"
-              onPress={() => console.log("item pressed")}
+              onPress={() => console.log(sortQuery)}
             >
               <CardBody className="overflow-visible p-0">
                 <Image
@@ -179,7 +141,9 @@ export function UserDashboard() {
               </CardBody>
               <CardFooter className="flex-col justify-between text-small">
                 <b>{item.title}</b>
-                <p className="text-default-500">{item.createdAt}</p>
+                <p className="text-default-500">
+                  {item.createdAt.toLocaleString()}
+                </p>
               </CardFooter>
             </Card>
           ))}
@@ -194,13 +158,13 @@ export function UserDashboard() {
             <TableColumn>ACTIONS</TableColumn>
           </TableHeader>
           <TableBody emptyContent={"No rows to display."}>
-            {rows.map((each) => (
-              <TableRow key={each.key}>
+            {staticForms.map((each) => (
+              <TableRow key={each.id}>
                 <TableCell>
                   <Library />
                 </TableCell>
-                <TableCell>{each.name}</TableCell>
-                <TableCell>{each.date}</TableCell>
+                <TableCell>{each.title}</TableCell>
+                <TableCell>{each.createdAt.toLocaleString()}</TableCell>
                 <TableCell>
                   <Dropdown>
                     <DropdownTrigger>
@@ -208,10 +172,48 @@ export function UserDashboard() {
                         <EllipsisVertical />
                       </button>
                     </DropdownTrigger>
-                    <DropdownMenu aria-label="Dynamic Actions" items={actions}>
-                      {(item) => (
-                        <DropdownItem key={item.key}>{item.label}</DropdownItem>
-                      )}
+                    <DropdownMenu aria-label="Actions">
+                      <DropdownItem key={0}>
+                        <button
+                          onClick={() => {
+                            setModalType("rename");
+                            setSelected(each.id);
+                            onOpen();
+                          }}
+                          className="cursor-pointer"
+                        >
+                          <span className="flex items-center gap-2">
+                            <PencilLine />
+                            Rename
+                          </span>
+                        </button>
+                      </DropdownItem>
+                      <DropdownItem key={1}>
+                        <button
+                          onClick={() => {
+                            setModalType("delete");
+                            setSelected(each.id);
+                            onOpen();
+                          }}
+                          className="cursor-pointer"
+                        >
+                          <span className="flex items-center gap-2 text-danger">
+                            <Trash2 />
+                            Delete
+                          </span>
+                        </button>
+                      </DropdownItem>
+                      <DropdownItem key={2}>
+                        <button
+                          onClick={() => navigate(`/forms/${each.id}`)}
+                          className="cursor-pointer"
+                        >
+                          <span className="flex items-center gap-2">
+                            <ExternalLink />
+                            Open
+                          </span>
+                        </button>
+                      </DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
                 </TableCell>
@@ -220,6 +222,13 @@ export function UserDashboard() {
           </TableBody>
         </Table>
       )}
+      <ModalProvider
+        key={selected}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        modalType={modalType}
+        active={active}
+      />
     </>
   );
 }
