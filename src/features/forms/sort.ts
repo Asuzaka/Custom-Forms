@@ -6,7 +6,7 @@ export function sortByTitle(forms: Form[]): Form[] {
 
 export function sortByCreatedAt(forms: Form[]): Form[] {
   return [...forms].sort(
-    (a, b) => b.createtAt.getTime() - a.createtAt.getTime(),
+    (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
   );
 }
 
