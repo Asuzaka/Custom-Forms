@@ -1,3 +1,48 @@
+import { useState } from "react";
+import { UserDashboard } from "./user";
+import { Card, Tab, Tabs } from "@heroui/react";
+
+type DashRoles = "admin" | "user";
+type AdminTab = "overview" | "templates" | "users" | "analytics";
+
 export function AdminDashboard() {
-  return <div>Hello Admin</div>;
+  const [tab, setTab] = useState<DashRoles>("admin");
+  const [admintab, setAdminTab] = useState<AdminTab>("analytics");
+
+  return (
+    <>
+      <div className="flex w-full flex-col py-3">
+        <h1 className="flex px-1 py-4 text-3xl">Control Panel</h1>
+        <Tabs
+          aria-label="Options"
+          selectedKey={tab}
+          onSelectionChange={(key) => setTab(key as DashRoles)}
+        >
+          <Tab key="user" title="User">
+            <UserDashboard />
+          </Tab>
+          <Tab key="admin" title="Admin">
+            <Card>
+              <div className="flex items-center justify-center">
+                <div>
+                  <Tabs
+                    aria-label="Tabs variants"
+                    variant="underlined"
+                    selectedKey={admintab}
+                    onSelectionChange={(key) => setAdminTab(key as AdminTab)}
+                  >
+                    <Tab key="overview" title="Overview" />
+                    <Tab key="templates" title="Templates" />
+                    <Tab key="users" title="Users" />
+                    <Tab key="analytics" title="Analytics" />
+                  </Tabs>
+                </div>
+                <div></div>
+              </div>
+            </Card>
+          </Tab>
+        </Tabs>
+      </div>
+    </>
+  );
 }

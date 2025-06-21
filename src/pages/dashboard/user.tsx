@@ -92,7 +92,7 @@ export function UserDashboard() {
   return (
     <>
       <div className="flex items-center justify-between px-2 py-3">
-        <Button color="primary">Add new Form</Button>
+        <Button color="primary">Create Form</Button>
         <div className="items-cente flex gap-2">
           <Button
             size="sm"
@@ -173,7 +173,7 @@ export function UserDashboard() {
                       </button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Actions">
-                      <DropdownItem key={0}>
+                      <DropdownItem key={0} textValue="Rename">
                         <button
                           onClick={() => {
                             setModalType("rename");
@@ -188,7 +188,7 @@ export function UserDashboard() {
                           </span>
                         </button>
                       </DropdownItem>
-                      <DropdownItem key={1}>
+                      <DropdownItem key={1} textValue="Delete">
                         <button
                           onClick={() => {
                             setModalType("delete");
@@ -203,7 +203,7 @@ export function UserDashboard() {
                           </span>
                         </button>
                       </DropdownItem>
-                      <DropdownItem key={2}>
+                      <DropdownItem key={2} textValue="Open">
                         <button
                           onClick={() => navigate(`/forms/${each.id}`)}
                           className="cursor-pointer"
