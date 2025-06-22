@@ -10,4 +10,8 @@ export const route = {
   DASHBOARD: {
     ROOT: "/dashboard",
   },
+  FORM: {
+    DETAIL: "/form/:id",
+    CREATE: "/forms/new",
+  },
 };
