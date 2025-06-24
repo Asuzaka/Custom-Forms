@@ -12,6 +12,6 @@ export const route = {
   },
   FORM: {
     DETAIL: "/form/:id",
-    CREATE: "/forms/new",
+    CREATE: "/newform",
   },
 };

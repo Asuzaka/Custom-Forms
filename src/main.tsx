@@ -32,18 +32,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: route.FORM.DETAIL,
-        element: (
-          <Protected>
-            <Form />
-          </Protected>
-        ),
-      },
-      {
         path: route.FORM.CREATE,
         element: (
           <Protected>
             <NewForm />
+          </Protected>
+        ),
+      },
+      {
+        path: route.FORM.DETAIL,
+        element: (
+          <Protected>
+            <Form />
           </Protected>
         ),
       },

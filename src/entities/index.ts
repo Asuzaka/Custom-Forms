@@ -6,3 +6,14 @@ export type { User } from "./auth/user";
 export type { Form } from "./Dashboard/form";
 export type { Sort, sortQuery } from "./Dashboard/sort";
 export type { ModalType } from "./Dashboard/modal";
+// Form entities
+export type {
+  Question,
+  CheckboxQuestion,
+  CheckboxOption,
+  NumberInputQuestion,
+  MultiLineQuestion,
+  SingleLineQuestion,
+  QuestionBase,
+  FormObject,
+} from "./form/form";
