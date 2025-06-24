@@ -4,7 +4,7 @@ export { Page as Home } from "./home/page";
 export { SignUp } from "./auth/signup";
 export { SignIn } from "./auth/singin";
 // Dashboard
-export { Dashboard } from "./dashboard/dashboard";
+export { Dashboard } from "./dashboard/Dashboard";
 // Form
 export { Form } from "./form/form";
 export { NewForm } from "./form/formNew";
