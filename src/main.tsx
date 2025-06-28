@@ -13,6 +13,8 @@ import {
   NewForm,
   Submit,
   GitHubCallback,
+  NotFound,
+  ErrorFallback,
 } from "./pages/index.ts";
 import { route } from "./shared/constants/route.ts";
 import { Protected } from "./shared/components/Protected.tsx";
@@ -21,6 +23,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorFallback />,
     children: [
       { index: true, element: <Home /> },
       { path: route.AUTH.SIGNIN.ROOT, element: <SignIn /> },
@@ -60,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: route.GITHUB.ROOT,
         element: <GitHubCallback />,
+      },
+      {
+        path: route.NOTFOUND.ROOT,
+        element: <NotFound />,
       },
     ],
   },

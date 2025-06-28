@@ -87,6 +87,7 @@ export function UserDashboard() {
   const [modalType, setModalType] = useState<ModalType>("");
   const navigate = useNavigate();
 
+  throw new Error("we could find you");
   const active = staticForms.find((each) => each.id === selected);
 
   return (

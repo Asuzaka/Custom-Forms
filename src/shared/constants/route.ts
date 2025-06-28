@@ -20,4 +20,7 @@ export const route = {
   GITHUB: {
     ROOT: "/github/callback",
   },
+  NOTFOUND: {
+    ROOT: "*",
+  },
 };
