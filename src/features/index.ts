@@ -9,3 +9,4 @@ export {
   returnSampleSingleLine,
 } from "./forms/generateNewForm";
 export { renderAnswerInput } from "./forms/renderAnswerInput";
+export { renderInput } from "./forms/renderInput";

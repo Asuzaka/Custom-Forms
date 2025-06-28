@@ -5,31 +5,64 @@ import { env } from "../config";
 export const api = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: env.BACKEND_URL,
+    baseUrl: env.BACKEND_URL + "/v1",
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    login: builder.mutation<{ user: User }, { uni: string; password: string }>({
-      query: (credentials) => ({
-        url: "/auth/login",
-        method: "POST",
-        body: credentials,
-      }),
-    }),
-    logout: builder.mutation<void, void>({
+    signup: builder.mutation<{ user: User }, { uni: string; password: string }>(
+      {
+        query: (user) => ({
+          url: "/auth/signin",
+          method: "POST",
+          body: user,
+        }),
+      },
+    ),
+    signout: builder.query<void, void>({
       query: () => ({
-        url: "/auth/logout",
+        url: "/auth/signout",
         method: "GET",
       }),
     }),
-    authenticated: builder.query<{ user: User }, void>({
+    authenticated: builder.query<{ data: User }, void>({
       query: () => ({
         url: "/auth/authenticated",
         method: "GET",
       }),
     }),
+    verify: builder.query<void, string>({
+      query: (token) => ({
+        url: `/auth/verify/${token}`,
+        method: "GET",
+      }),
+    }),
+
+    forget: builder.mutation<void, { email: string }>({
+      query: (data) => ({
+        url: "/auth/forgetPassword",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    reset: builder.mutation<
+      void,
+      { token: string; password: string; passwordConfirm: string }
+    >({
+      query: ({ token, ...data }) => ({
+        url: `/auth/resetPassword/${token}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useAuthenticatedQuery } =
-  api;
+export const {
+  useResetMutation,
+  useForgetMutation,
+  useVerifyQuery,
+  useLazyAuthenticatedQuery,
+  useSignoutQuery,
+  useSignupMutation,
+  useAuthenticatedQuery,
+} = api;

@@ -11,6 +11,8 @@ import {
   SignUp,
   Form,
   NewForm,
+  Submit,
+  GitHubCallback,
 } from "./pages/index.ts";
 import { route } from "./shared/constants/route.ts";
 import { Protected } from "./shared/components/Protected.tsx";
@@ -35,7 +37,7 @@ const router = createBrowserRouter([
         path: route.FORM.CREATE,
         element: (
           <Protected>
-            <NewForm />
+            <NewForm Form={undefined} />
           </Protected>
         ),
       },
@@ -46,6 +48,18 @@ const router = createBrowserRouter([
             <Form />
           </Protected>
         ),
+      },
+      {
+        path: route.SUBMIT.ROOT,
+        element: (
+          <Protected>
+            <Submit />
+          </Protected>
+        ),
+      },
+      {
+        path: route.GITHUB.ROOT,
+        element: <GitHubCallback />,
       },
     ],
   },

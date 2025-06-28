@@ -1,9 +1,8 @@
-import { MoonIcon, NotebookPenIcon, Search, SunMediumIcon } from "lucide-react";
+import { MoonIcon, NotebookPenIcon, SunMediumIcon } from "lucide-react";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
-  Input,
   DropdownItem,
   DropdownTrigger,
   Dropdown,
@@ -31,8 +30,14 @@ const langs: Lang[] = [
 import { useTheme } from "@heroui/use-theme";
 import type { Lang } from "../../entities";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
+import { logout } from "../../store/userSlice";
+import { SearchWithButton } from "./search";
 
 export function Widget() {
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
   const [selectedLang, setSelectedLang] = useState<Set<string>>(
     new Set(["uz"]),
@@ -63,19 +68,7 @@ export function Widget() {
           <p className="hidden font-bold text-inherit sm:block">Custom Forms</p>
         </NavbarBrand>
 
-        <Input
-          classNames={{
-            base: "max-w-full sm:max-w-[15rem] h-10",
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper:
-              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-          }}
-          placeholder="Search  Ctrl K"
-          size="sm"
-          startContent={<Search />}
-          type="search"
-        />
+        <SearchWithButton />
       </NavbarContent>
 
       <NavbarContent as="div" className="items-center" justify="end">
@@ -125,25 +118,63 @@ export function Widget() {
               as="button"
               className="transition-transform"
               color="secondary"
-              name="Jason Hughes"
+              name={user?.name}
               size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              src={
+                user === null
+                  ? `${import.meta.env.VITE_BACKEND_URL}/public/users/default.png`
+                  : user?.photo
+              }
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+            {user === null ? (
+              <>
+                <DropdownItem
+                  textValue="profile"
+                  key="profile"
+                  className="h-14 gap-2"
+                >
+                  <p className="font-semibold">You are not signed in</p>
+                </DropdownItem>
+                <DropdownItem
+                  textValue="signin"
+                  onPress={() => navigate("/signin")}
+                  key="signin"
+                >
+                  Sign in
+                </DropdownItem>
+              </>
+            ) : (
+              <>
+                <DropdownItem
+                  textValue="profile"
+                  key="profile"
+                  className="h-14 gap-2"
+                >
+                  <p className="font-semibold">Signed in as</p>
+                  <p className="font-semibold">{user?.email}</p>
+                </DropdownItem>
+                <DropdownItem
+                  textValue="dashboard"
+                  onPress={() => navigate("/dashboard")}
+                  key="dashboard"
+                >
+                  Dashboard
+                </DropdownItem>
+              </>
+            )}
+
+            <DropdownItem textValue="dashboard" key="help_and_feedback">
+              Help & Feedback
             </DropdownItem>
             <DropdownItem
-              onPress={() => navigate("/dashboard")}
-              key="dashboard"
+              onPress={() => dispatch(logout())}
+              textValue="dashboard"
+              key="logout"
+              color="danger"
             >
-              Dashboard
-            </DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
-              Log Out
+              Sign out
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

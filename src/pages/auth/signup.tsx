@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Form, Input, Link } from "@heroui/react";
 import validator from "validator";
+import { GitHubLoginButton, GoogleLoginButton } from "../../widgets";
 
 export function SignUp() {
   const [errors, setErrors] = useState({});
@@ -94,13 +95,9 @@ export function SignUp() {
 
         <div>
           <hr></hr>
-          <div className="mt-3 flex justify-between">
-            <Button color="primary" variant="bordered" className="w-[40%]">
-              Google
-            </Button>
-            <Button color="secondary" variant="bordered" className="w-[40%]">
-              Github
-            </Button>
+          <div className="mt-3 flex flex-col justify-between gap-5">
+            <GoogleLoginButton />
+            <GitHubLoginButton />
           </div>
           <div className="mt-2 flex gap-2">
             <p>Already have an account? </p>

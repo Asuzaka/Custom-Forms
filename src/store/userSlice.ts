@@ -7,12 +7,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  user: {
-    id: "000",
-    username: "Admin",
-    email: "admin@email.co",
-    role: "admin",
-  },
+  user: null,
 };
 
 const userSlice = createSlice({

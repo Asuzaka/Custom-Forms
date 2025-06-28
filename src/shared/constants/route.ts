@@ -14,4 +14,10 @@ export const route = {
     DETAIL: "/form/:id",
     CREATE: "/newform",
   },
+  SUBMIT: {
+    ROOT: "/submit/:id",
+  },
+  GITHUB: {
+    ROOT: "/github/callback",
+  },
 };

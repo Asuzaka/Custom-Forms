@@ -19,15 +19,14 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-type MainTab = "builder" | "settings";
+type MainTab = "builder" | "settings" | "submissions";
 
-export function NewForm() {
+export function NewForm({ Form }: { Form: FormObject | undefined }) {
+  const userId = useSelector((state: RootState) => state.user.user?.id);
   const [mainTab, setMainTab] = useState<MainTab>("builder");
+  // editor
   const [newForm, setNewForm] = useState<FormObject>(
-    returnNewFormObject(
-      useSelector((state: RootState) => state.user.user?.id) || "",
-      false,
-    ),
+    Form || returnNewFormObject(userId || "", false),
   );
   const [items, setItems] = useState<Question[]>(newForm.questions);
   const sensors = useSensors(useSensor(PointerSensor));
@@ -84,6 +83,13 @@ export function NewForm() {
               variant={mainTab === "settings" ? "solid" : "bordered"}
             >
               Settings
+            </Button>
+            <Button
+              onPress={() => setMainTab("submissions")}
+              color="primary"
+              variant={mainTab === "submissions" ? "solid" : "bordered"}
+            >
+              Submissions
             </Button>
           </ButtonGroup>
 
