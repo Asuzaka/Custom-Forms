@@ -30,14 +30,17 @@ export function GoogleLoginButton() {
     const token = response.credential;
 
     try {
-      const res = await fetch("http://localhost:4000/v1/auth/google", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/v1/auth/google`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // Required to send/receive cookies
+          body: JSON.stringify({ token }),
         },
-        credentials: "include", // Required to send/receive cookies
-        body: JSON.stringify({ token }),
-      });
+      );
 
       const data = await res.json();
 
