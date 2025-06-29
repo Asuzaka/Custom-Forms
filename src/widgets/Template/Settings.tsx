@@ -1,6 +1,7 @@
 import { Input, Select, SelectItem, Textarea } from "@heroui/react";
 import type { TemplateObject } from "../../entities";
 import type { SetStateAction } from "react";
+import { Tags } from "./tags";
 
 const topics = [
   { key: "education", label: "Education" },
@@ -68,9 +69,13 @@ export function Settings({
           ))}
         </Select>
       </div>
-      <div className="flex items-center gap-2">
-        <label className="text-lg font-medium">Tags</label>
-      </div>
+
+      <Tags
+        tags={newTemplate.tags}
+        setNewTemplate={setNewTemplate}
+        newTemplate={newTemplate}
+      />
+      {newTemplate.access === "public" ? <></> : <></>}
     </div>
   );
 }

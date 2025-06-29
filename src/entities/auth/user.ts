@@ -4,7 +4,7 @@ export type User = {
   name: string;
   email: string;
   status: Status;
-  role: Role;
+  role?: Role;
 };
 
 export type Status = "blocked" | "active";

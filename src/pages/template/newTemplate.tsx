@@ -102,8 +102,7 @@ export function NewTemplate({
 
           <ButtonGroup>
             <Button color="primary">Publish Form</Button>
-            <Button color="primary">Save Form</Button>
-            <Button color="primary">Publish Template</Button>
+            <Button color="primary">Save Template</Button>
           </ButtonGroup>
         </div>
       </div>
