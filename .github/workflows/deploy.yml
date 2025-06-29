@@ -23,6 +23,7 @@ jobs:
         with:
           publish-dir: ./dist
           production-branch: main
+          production-deploy: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "GitHub Actions deploy"
           netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
