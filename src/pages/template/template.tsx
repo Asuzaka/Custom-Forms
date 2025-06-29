@@ -7,7 +7,7 @@ export function Template() {
   return (
     <div>
       <p>Viewing form with ID: {id}</p>
-      <NewTemplate Form={undefined} />
+      <NewTemplate Template={undefined} />
     </div>
   );
 }

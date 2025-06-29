@@ -9,7 +9,7 @@ import { GripVertical, Trash2 } from "lucide-react";
 import { dynamicReturn, renderAnswerInput } from "../../features";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { Question, CheckboxOption } from "../../entities";
+import type { TemplateQuestion, CheckboxOption } from "../../entities";
 import type { Dispatch, SetStateAction } from "react";
 import {
   Button,
@@ -31,8 +31,8 @@ export function SortableItem({
   selectedId: string;
   setSelectedId: Dispatch<SetStateAction<string>>;
   id: string;
-  question: Question;
-  onQuestionChange: (id: string, updatedQuestion: Question) => void;
+  question: TemplateQuestion;
+  onQuestionChange: (id: string, updatedQuestion: TemplateQuestion) => void;
   handleQuestionDelete: (id: string) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -47,17 +47,6 @@ export function SortableItem({
     value: "singleLine" | "multiLine" | "numberInput" | "checkbox",
   ) => {
     onQuestionChange(id, dynamicReturn(value, id));
-  };
-
-  const handleStringAnswer = (value: string) => {
-    if (question.type === "singleLine" || question.type === "multiLine") {
-      onQuestionChange(id, { ...question, answer: value });
-    }
-  };
-
-  const handleNumberAnswer = (value: number) => {
-    if (question.type !== "numberInput") return;
-    onQuestionChange(id, { ...question, answer: value });
   };
 
   const handleRequiredChange = (isRequired: boolean) => {
@@ -100,7 +89,6 @@ export function SortableItem({
     const newOption: CheckboxOption = {
       id: crypto.randomUUID(),
       text: "New Option",
-      selected: false,
     };
 
     onQuestionChange(id, {
@@ -206,8 +194,6 @@ export function SortableItem({
         <div>
           {renderAnswerInput({
             question,
-            handleStringAnswer,
-            handleNumberAnswer,
             handleAddCheckboxOption,
             handleCheckboxTextChange,
             handleDeleteCheckboxOption,

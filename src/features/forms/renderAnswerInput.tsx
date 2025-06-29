@@ -1,12 +1,10 @@
 import { Input, NumberInput, Textarea } from "@heroui/react";
-import type { Question } from "../../entities";
+import type { TemplateQuestion } from "../../entities";
 import { CheckBoxEditor } from "../../widgets";
 
 export function renderAnswerInput(functions: {
-  question: Question;
+  question: TemplateQuestion;
   selected: string;
-  handleStringAnswer: (value: string) => void;
-  handleNumberAnswer: (value: number) => void;
   handleCheckboxTextChange: (id: string, value: string) => void;
   handleDeleteCheckboxOption: (id: string) => void;
   handleAddCheckboxOption: () => void;
@@ -19,8 +17,6 @@ export function renderAnswerInput(functions: {
           isDisabled
           size="sm"
           aria-label="Text input"
-          value={functions.question.answer}
-          onChange={(e) => functions.handleStringAnswer(e.target.value)}
         />
       );
     case "multiLine":
@@ -30,21 +26,10 @@ export function renderAnswerInput(functions: {
           isDisabled
           size="sm"
           aria-label="Textarea input"
-          maxRows={functions.question.lines}
-          value={functions.question.answer}
-          onChange={(e) => functions.handleStringAnswer(e.target.value)}
         />
       );
     case "numberInput":
-      return (
-        <NumberInput
-          isDisabled
-          size="sm"
-          aria-label="Number input"
-          value={functions.question.answer}
-          onValueChange={(v: number) => functions.handleNumberAnswer(v)}
-        />
-      );
+      return <NumberInput isDisabled size="sm" aria-label="Number input" />;
     case "checkbox":
       return (
         <CheckBoxEditor

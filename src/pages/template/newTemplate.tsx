@@ -17,7 +17,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import type { QuestionBase, TemplateObject } from "../../entities";
+import type { TemplateObject, TemplateQuestion } from "../../entities";
 
 type MainTab = "builder" | "settings" | "submissions";
 
@@ -32,11 +32,14 @@ export function NewTemplate({
   const [newTemplate, setNewTemplate] = useState<TemplateObject>(
     Template || returnNewFormObject(userId || ""),
   );
-  const [items, setItems] = useState<QuestionBase[]>(newTemplate.questions);
+  const [items, setItems] = useState<TemplateQuestion[]>(newTemplate.questions);
   const sensors = useSensors(useSensor(PointerSensor));
   const [selectedId, setSelectedId] = useState<string>("");
 
-  const handleQuestionChange = (id: string, updatedQuestion: QuestionBase) => {
+  const handleQuestionChange = (
+    id: string,
+    updatedQuestion: TemplateQuestion,
+  ) => {
     setItems(items.map((q) => (q.id === id ? updatedQuestion : q)));
   };
 

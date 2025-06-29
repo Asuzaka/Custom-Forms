@@ -26,6 +26,7 @@ export function Layout() {
         photo: userData.photo,
         id: userData.id,
         role: userData.role,
+        status: userData.status,
       };
 
       dispatch(setUser(user));

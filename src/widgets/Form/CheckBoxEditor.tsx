@@ -1,6 +1,6 @@
 import { Button } from "@heroui/react";
 import { X } from "lucide-react";
-import type { CheckboxQuestion } from "../../entities";
+import type { CheckboxTemplateQuestion } from "../../entities";
 
 export function CheckBoxEditor({
   question,
@@ -9,7 +9,7 @@ export function CheckBoxEditor({
   handleDeleteCheckboxOption,
   handleAddCheckboxOption,
 }: {
-  question: CheckboxQuestion;
+  question: CheckboxTemplateQuestion;
   selectedId: string;
   handleCheckboxTextChange: (id: string, value: string) => void;
   handleDeleteCheckboxOption: (id: string) => void;
