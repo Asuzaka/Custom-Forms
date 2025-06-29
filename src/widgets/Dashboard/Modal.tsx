@@ -1,3 +1,5 @@
+import { useState } from "react";
+import type { ModalType, TemplateObject } from "../../entities";
 import {
   Button,
   Input,
@@ -7,14 +9,12 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@heroui/react";
-import type { Form, ModalType } from "../../entities";
-import { useState } from "react";
 
 type Props = {
   isOpen: boolean;
   onOpenChange: () => void;
   modalType: ModalType;
-  active: Form | undefined;
+  active: TemplateObject | undefined;
 };
 
 export function ModalProvider({

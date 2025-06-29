@@ -2,7 +2,6 @@ import { Button, ButtonGroup, Image } from "@heroui/react";
 import { returnNewFormObject, returnSampleSingleLine } from "../../features";
 import { useSelector } from "react-redux";
 import { Settings, SortableItem } from "../../widgets";
-import type { Question, FormObject } from "../../entities";
 import type { RootState } from "../../store/store";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
@@ -18,21 +17,26 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import type { QuestionBase, TemplateObject } from "../../entities";
 
 type MainTab = "builder" | "settings" | "submissions";
 
-export function NewForm({ Form }: { Form: FormObject | undefined }) {
+export function NewTemplate({
+  Template,
+}: {
+  Template: TemplateObject | undefined;
+}) {
   const userId = useSelector((state: RootState) => state.user.user?.id);
   const [mainTab, setMainTab] = useState<MainTab>("builder");
   // editor
-  const [newForm, setNewForm] = useState<FormObject>(
-    Form || returnNewFormObject(userId || "", false),
+  const [newTemplate, setNewTemplate] = useState<TemplateObject>(
+    Template || returnNewFormObject(userId || ""),
   );
-  const [items, setItems] = useState<Question[]>(newForm.questions);
+  const [items, setItems] = useState<QuestionBase[]>(newTemplate.questions);
   const sensors = useSensors(useSensor(PointerSensor));
   const [selectedId, setSelectedId] = useState<string>("");
 
-  const handleQuestionChange = (id: string, updatedQuestion: Question) => {
+  const handleQuestionChange = (id: string, updatedQuestion: QuestionBase) => {
     setItems(items.map((q) => (q.id === id ? updatedQuestion : q)));
   };
 
@@ -47,7 +51,7 @@ export function NewForm({ Form }: { Form: FormObject | undefined }) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setNewForm({ ...newForm, image: file });
+      setNewTemplate({ ...newTemplate, image: file });
     }
   };
 
@@ -56,8 +60,8 @@ export function NewForm({ Form }: { Form: FormObject | undefined }) {
       <div className="flex flex-col justify-between gap-5 py-2">
         <div className="flex items-center justify-between rounded-lg border px-10 py-5">
           <div className="flex flex-col">
-            <h1 className="text-3xl font-bold">{newForm.title}</h1>
-            <ReactMarkdown>{newForm.description}</ReactMarkdown>
+            <h1 className="text-3xl font-bold">{newTemplate.title}</h1>
+            <ReactMarkdown>{newTemplate.description}</ReactMarkdown>
           </div>
           <div>
             <Image
@@ -102,8 +106,8 @@ export function NewForm({ Form }: { Form: FormObject | undefined }) {
       </div>
       {mainTab === "settings" && (
         <Settings
-          newForm={newForm}
-          setNewForm={setNewForm}
+          newTemplate={newTemplate}
+          setNewTemplate={setNewTemplate}
           handleFileChange={handleFileChange}
         />
       )}

@@ -1,5 +1,5 @@
 import { Input, Select, SelectItem, Textarea } from "@heroui/react";
-import type { FormObject } from "../../entities";
+import type { TemplateObject } from "../../entities";
 import type { SetStateAction } from "react";
 
 const topics = [
@@ -9,29 +9,35 @@ const topics = [
 ];
 
 type Props = {
-  newForm: FormObject;
-  setNewForm: (value: SetStateAction<FormObject>) => void;
+  newTemplate: TemplateObject;
+  setNewTemplate: (value: SetStateAction<TemplateObject>) => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function Settings({ newForm, setNewForm, handleFileChange }: Props) {
+export function Settings({
+  newTemplate,
+  setNewTemplate,
+  handleFileChange,
+}: Props) {
   return (
     <div className="mt-2 flex flex-col gap-3">
       <div className="flex items-center justify-between gap-3">
         <label className="text-lg font-medium">Title:</label>
         <Input
           aria-label="title"
-          value={newForm.title}
-          onChange={(e) => setNewForm({ ...newForm, title: e.target.value })}
+          value={newTemplate.title}
+          onChange={(e) =>
+            setNewTemplate({ ...newTemplate, title: e.target.value })
+          }
         />
       </div>
       <div className="flex flex-col gap-2">
         <label className="text-lg font-medium">Description</label>
         <Textarea
           aria-label="description"
-          value={newForm.description}
+          value={newTemplate.description}
           onChange={(e) =>
-            setNewForm({ ...newForm, description: e.target.value })
+            setNewTemplate({ ...newTemplate, description: e.target.value })
           }
         />
       </div>
@@ -49,12 +55,12 @@ export function Settings({ newForm, setNewForm, handleFileChange }: Props) {
         <Select
           className="max-w-xs"
           aria-label="select-topic"
-          selectedKeys={[newForm.topic]}
+          selectedKeys={[newTemplate.topic]}
           onSelectionChange={(keys) => {
             if (keys === "all") return;
             const newKey = [...keys][0];
             if (!newKey) return;
-            setNewForm({ ...newForm, topic: newKey as string });
+            setNewTemplate({ ...newTemplate, topic: newKey as string });
           }}
         >
           {topics.map((topic) => (

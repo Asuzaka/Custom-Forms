@@ -1,92 +1,53 @@
-import type { FormObject } from "../../entities";
+import type { TemplateObject } from "../../entities";
 
-export function returnNewFormObject(
-  id: string,
-  template: false | string,
-): FormObject {
+export function returnNewFormObject(id: string): TemplateObject {
   return {
     image: "",
     topic: "other",
+    tags: ["cool", "education", "spring"],
     description: "Form description",
     title: "New Form",
     creator: id,
-    template,
-    thumbail: "",
-    publish: false,
-    publishTemplate: "",
-    publishUrl: "",
+    access: "restricted",
+    allowedUsers: [],
     questions: [
       {
         id: crypto.randomUUID(),
         type: "singleLine",
-        text: "Question?",
-        answer: "default value",
+        text: "Where do you live?",
         required: true,
-        maxLength: 100,
-        placeholder: "My answer",
+        placeholder: "Type your answer...",
         visible: true,
       },
       {
         id: crypto.randomUUID(),
         type: "multiLine",
-        text: "Enter your Mutiline Text?",
-        answer: "",
-        lines: 5,
-        required: true,
-        placeholder: "My answer",
+        text: "Explain your biggest challenge this year.",
+        required: false,
+        placeholder: "Write your response here...",
         visible: true,
       },
       {
         id: crypto.randomUUID(),
         type: "numberInput",
-        text: "How many years of experience?",
-        answer: 0,
-        required: true,
+        text: "How many siblings do you have?",
+        required: false,
         visible: true,
       },
       {
         id: crypto.randomUUID(),
         type: "checkbox",
-        text: "Question?",
-        required: false,
+        text: "Which languages do you speak?",
+        required: Math.random() > 0.5,
         visible: true,
         options: [
-          {
-            id: crypto.randomUUID(),
-            selected: false,
-            text: "Opinion: We are dead",
-          },
-          {
-            id: crypto.randomUUID(),
-            selected: false,
-            text: "Opinion: We were dead",
-          },
-          {
-            id: crypto.randomUUID(),
-            selected: false,
-            text: "Options are not equal",
-          },
-          {
-            id: crypto.randomUUID(),
-            selected: false,
-            text: "None of above",
-          },
+          { id: crypto.randomUUID(), text: "English" },
+          { id: crypto.randomUUID(), text: "Spanish" },
+          { id: crypto.randomUUID(), text: "French" },
         ],
-      },
-      {
-        id: crypto.randomUUID(),
-        type: "singleLine",
-        text: "Question?",
-        answer: "",
-        required: false,
-        maxLength: 100,
-        placeholder: "My answer",
-        visible: true,
+        multiple: true,
       },
     ],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    seen: new Date(),
   };
 }
 

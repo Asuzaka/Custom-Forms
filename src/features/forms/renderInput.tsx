@@ -5,10 +5,10 @@ import {
   NumberInput,
   Textarea,
 } from "@heroui/react";
-import type { Question } from "../../entities";
+import type { TemplateQuestion } from "../../entities";
 
 export function renderInput(
-  question: Question,
+  question: TemplateQuestion,
   onCheckboxChange?: (id: string, value: string[]) => void,
 ) {
   switch (question.type) {
@@ -49,7 +49,9 @@ export function renderInput(
           onChange={(values) => onCheckboxChange?.(question.id, values)}
         >
           {question.options.map((each) => (
-            <Checkbox value={each.text}>{each.text}</Checkbox>
+            <Checkbox key={each.id} value={each.text}>
+              {each.text}
+            </Checkbox>
           ))}
         </CheckboxGroup>
       );

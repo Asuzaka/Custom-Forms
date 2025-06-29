@@ -10,12 +10,12 @@ export const route = {
   DASHBOARD: {
     ROOT: "/dashboard",
   },
-  FORM: {
-    DETAIL: "/form/:id",
-    CREATE: "/newform",
+  TEMPLATE: {
+    DETAIL: "/template/:id",
+    CREATE: "/newtemplate",
   },
-  SUBMIT: {
-    ROOT: "/submit/:id",
+  FORM: {
+    ROOT: "/form/:id",
   },
   GITHUB: {
     ROOT: "/github/callback",

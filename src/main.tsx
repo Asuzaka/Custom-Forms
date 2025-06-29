@@ -9,12 +9,12 @@ import {
   Home,
   SignIn,
   SignUp,
-  Form,
-  NewForm,
-  Submit,
   GitHubCallback,
   NotFound,
   ErrorFallback,
+  Template,
+  NewTemplate,
+  FormPage,
 } from "./pages/index.ts";
 import { route } from "./shared/constants/route.ts";
 import { Protected } from "./shared/components/Protected.tsx";
@@ -37,26 +37,26 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: route.FORM.CREATE,
+        path: route.TEMPLATE.CREATE,
         element: (
           <Protected>
-            <NewForm Form={undefined} />
+            <NewTemplate Form={undefined} />
           </Protected>
         ),
       },
       {
-        path: route.FORM.DETAIL,
+        path: route.TEMPLATE.DETAIL,
         element: (
           <Protected>
-            <Form />
+            <Template />
           </Protected>
         ),
       },
       {
-        path: route.SUBMIT.ROOT,
+        path: route.FORM.ROOT,
         element: (
           <Protected>
-            <Submit />
+            <FormPage />
           </Protected>
         ),
       },

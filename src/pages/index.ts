@@ -7,10 +7,10 @@ export { GitHubCallback } from "./auth/githubCallback";
 // Dashboard
 export { Dashboard } from "./dashboard/Dashboard";
 // Form
-export { Form } from "./form/form";
-export { NewForm } from "./form/formNew";
+export { Template } from "./template/template";
+export { NewTemplate } from "./template/newTemplate";
 // Submit
-export { Submit } from "./submit/submit";
+export { FormPage } from "./form/form";
 // Error
 export { ErrorFallback } from "./error/error";
 // 404

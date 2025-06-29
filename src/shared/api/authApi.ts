@@ -5,41 +5,42 @@ import { env } from "../config";
 export const api = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: env.BACKEND_URL + "/v1",
+    baseUrl: env.BACKEND_URL + "/v1/auth",
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    signup: builder.mutation<{ user: User }, { uni: string; password: string }>(
-      {
-        query: (user) => ({
-          url: "/auth/signin",
-          method: "POST",
-          body: user,
-        }),
-      },
-    ),
+    signin: builder.mutation<
+      { user: User },
+      { email: string; password: string }
+    >({
+      query: (user) => ({
+        url: "/signin",
+        method: "POST",
+        body: user,
+      }),
+    }),
     signout: builder.query<void, void>({
       query: () => ({
-        url: "/auth/signout",
+        url: "/signout",
         method: "GET",
       }),
     }),
     authenticated: builder.query<{ data: User }, void>({
       query: () => ({
-        url: "/auth/authenticated",
+        url: "/authenticated",
         method: "GET",
       }),
     }),
     verify: builder.query<void, string>({
       query: (token) => ({
-        url: `/auth/verify/${token}`,
+        url: `/verify/${token}`,
         method: "GET",
       }),
     }),
 
     forget: builder.mutation<void, { email: string }>({
       query: (data) => ({
-        url: "/auth/forgetPassword",
+        url: "/forgetPassword",
         method: "POST",
         body: data,
       }),
@@ -63,6 +64,6 @@ export const {
   useVerifyQuery,
   useLazyAuthenticatedQuery,
   useSignoutQuery,
-  useSignupMutation,
+  useSigninMutation,
   useAuthenticatedQuery,
 } = api;

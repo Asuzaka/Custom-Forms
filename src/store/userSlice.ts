@@ -4,10 +4,12 @@ import type { User } from "../entities";
 
 interface UserState {
   user: User | null;
+  isLoading: boolean;
 }
 
 const initialState: UserState = {
   user: null,
+  isLoading: true,
 };
 
 const userSlice = createSlice({
@@ -16,12 +18,16 @@ const userSlice = createSlice({
   reducers: {
     setUser(state, action: PayloadAction<User>) {
       state.user = action.payload;
+      state.isLoading = false;
     },
     logout(state) {
       state.user = null;
     },
+    setNoUser(state) {
+      state.isLoading = false;
+    },
   },
 });
 
-export const { setUser, logout } = userSlice.actions;
+export const { setUser, logout, setNoUser } = userSlice.actions;
 export default userSlice.reducer;

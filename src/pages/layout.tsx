@@ -3,7 +3,7 @@ import { useAuthenticatedQuery } from "../shared/api/authApi";
 import { Navbar } from "../widgets";
 import { Outlet } from "react-router";
 import { useDispatch } from "react-redux";
-import { setUser } from "../store/userSlice";
+import { setNoUser, setUser } from "../store/userSlice";
 
 export function Layout() {
   const { data, error, isLoading } = useAuthenticatedQuery();
@@ -12,10 +12,13 @@ export function Layout() {
   useEffect(() => {
     if (isLoading) return;
     if (error) {
-      // come here to error handling
+      dispatch(setNoUser());
     } else {
       const userData = data?.data;
-      if (!userData) return;
+      if (!userData) {
+        dispatch(setNoUser());
+        return;
+      }
 
       const user = {
         email: userData.email,
