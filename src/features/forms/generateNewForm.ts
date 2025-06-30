@@ -8,8 +8,8 @@ export function returnNewFormObject(id: string): TemplateObject {
     description: "Form description",
     title: "New Form",
     creator: id,
-    access: "restricted",
-    allowedUsers: [],
+    access: "public",
+    allowedUsers: ["685e6f398b63a75bba91557b"],
     questions: [
       {
         id: crypto.randomUUID(),

@@ -2,12 +2,8 @@ import { Input, Select, SelectItem, Textarea } from "@heroui/react";
 import type { TemplateObject } from "../../entities";
 import type { SetStateAction } from "react";
 import { Tags } from "./tags";
-
-const topics = [
-  { key: "education", label: "Education" },
-  { key: "quiz", label: "Quiz" },
-  { key: "other", label: "Other" },
-];
+import { Users } from "./users";
+import { access, topics } from "../../shared/constants/settings";
 
 type Props = {
   newTemplate: TemplateObject;
@@ -21,7 +17,7 @@ export function Settings({
   handleFileChange,
 }: Props) {
   return (
-    <div className="mt-2 flex flex-col gap-3">
+    <div className="mt-2 flex flex-col gap-3 pb-10">
       <div className="flex items-center justify-between gap-3">
         <label className="text-lg font-medium">Title:</label>
         <Input
@@ -75,7 +71,34 @@ export function Settings({
         setNewTemplate={setNewTemplate}
         newTemplate={newTemplate}
       />
-      {newTemplate.access === "public" ? <></> : <></>}
+      <div className="flex items-center gap-2">
+        <label className="text-lg font-medium">Access:</label>
+        <Select
+          className="max-w-xs"
+          aria-label="select-topic"
+          selectedKeys={[newTemplate.access]}
+          onSelectionChange={(keys) => {
+            if (keys === "all") return;
+            const newKey = [...keys][0];
+            if (!newKey) return;
+            setNewTemplate({
+              ...newTemplate,
+              access: newKey as "public" | "restricted",
+            });
+          }}
+        >
+          {access.map((acc) => (
+            <SelectItem key={acc.key}>{acc.label}</SelectItem>
+          ))}
+        </Select>
+      </div>
+      {newTemplate.access === "restricted" && (
+        <Users
+          users={newTemplate.allowedUsers}
+          setNewTemplate={setNewTemplate}
+          newTemplate={newTemplate}
+        />
+      )}
     </div>
   );
 }

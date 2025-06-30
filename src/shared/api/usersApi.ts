@@ -9,7 +9,10 @@ export const api = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    getUsers: builder.mutation<{ data: User[] }, { users: string[] }>({
+    getUsers: builder.mutation<
+      { data: { users: User[] } },
+      { users: string[] }
+    >({
       query: (data) => ({
         url: "/",
         method: "POST",
@@ -38,3 +41,10 @@ export const api = createApi({
     }),
   }),
 });
+
+export const {
+  useGetAllUsersQuery,
+  useGetUsersMutation,
+  useBlockUsersMutation,
+  useUnBlockUsersMutation,
+} = api;

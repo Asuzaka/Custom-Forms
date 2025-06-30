@@ -41,8 +41,8 @@ export function Tags({ tags, setNewTemplate, newTemplate }: Props) {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-lg font-medium">Tags</label>
-      <div className="flex flex-wrap gap-2 rounded-md px-3 py-4 dark:bg-[#191a1b]">
+      <label className="text-lg font-medium">Tags: </label>
+      <div className="flex flex-wrap gap-2 rounded-md bg-gray-100 px-3 py-4 dark:bg-[#191a1b]">
         {tags.map((each) => (
           <Chip color="primary" onClose={() => handleRemove(each)}>
             {each}
@@ -56,7 +56,7 @@ export function Tags({ tags, setNewTemplate, newTemplate }: Props) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Add tags..."
-            className="w-full rounded-md px-2 py-2 placeholder-gray-400 dark:bg-[#191a1b]"
+            className="w-full rounded-md bg-gray-100 px-2 py-2 placeholder-gray-400 dark:bg-[#191a1b]"
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
           />

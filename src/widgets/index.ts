@@ -11,6 +11,7 @@ export { CheckBoxEditor } from "./Template/CheckBoxEditor";
 export { Settings } from "./Template/Settings";
 export { SortableItem } from "./Template/SortableItem";
 export { Tags } from "./Template/tags";
+export { Users } from "./Template/users";
 // Auth
 export { GoogleLoginButton } from "./Auth/GoogleButton";
 export { GitHubLoginButton } from "./Auth/GithubButton";

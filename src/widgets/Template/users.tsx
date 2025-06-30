@@ -1,6 +1,7 @@
-import { Button, Chip } from "@heroui/react";
+import { Avatar, Button, Chip } from "@heroui/react";
 import { useEffect, useState, type SetStateAction } from "react";
 import type { TemplateObject, User } from "../../entities";
+import { useGetUsersMutation } from "../../shared/api/usersApi";
 
 type Props = {
   users: string[];
@@ -8,11 +9,18 @@ type Props = {
   newTemplate: TemplateObject;
 };
 
-export function Tags({ users, setNewTemplate, newTemplate }: Props) {
-  const {data: fullUsers, isLoading, error} = 
+export function Users({ users, setNewTemplate, newTemplate }: Props) {
+  const [getUsers, { data: fullUsers }] = useGetUsersMutation();
+  const [sort, setSort] = useState<"name" | "email">("name");
   const [query, setQuery] = useState<string>("");
   const [results, setResults] = useState<User[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (users.length > 0) {
+      getUsers({ users });
+    }
+  }, [users, getUsers]);
 
   useEffect(() => {
     if (!query) {
@@ -64,11 +72,25 @@ export function Tags({ users, setNewTemplate, newTemplate }: Props) {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-lg font-medium">Tags</label>
-      <div className="flex flex-wrap gap-2 rounded-md px-3 py-4 dark:bg-[#191a1b]">
-        {users.map((each) => (
-          <Chip color="primary" onClose={() => handleRemove(each)}>
-            {each}
+      <div className="flex items-center justify-between">
+        <label className="text-lg font-medium">Allowed Users:</label>
+        <Button
+          onPress={() =>
+            setSort((prev) => (prev === "name" ? "email" : "name"))
+          }
+        >
+          {sort === "name" ? "Sort by Name" : "Sort by Email"}
+        </Button>
+      </div>
+      <div className="flex flex-wrap gap-2 rounded-md bg-gray-100 px-3 py-4 dark:bg-[#191a1b]">
+        {fullUsers?.data.users.map((each) => (
+          <Chip
+            avatar={<Avatar isBordered name={each.name} src={each.photo} />}
+            variant="flat"
+            color="primary"
+            onClose={() => handleRemove(each.id)}
+          >
+            {each.name}
           </Chip>
         ))}
       </div>
@@ -78,22 +100,27 @@ export function Tags({ users, setNewTemplate, newTemplate }: Props) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Add tags..."
-            className="w-full rounded-md px-2 py-2 placeholder-gray-400 dark:bg-[#191a1b]"
+            placeholder="Search for users.."
+            className="w-full rounded-md bg-gray-100 px-2 py-2 placeholder-gray-400 dark:bg-[#191a1b]"
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
           />
-          <Button onPress={() => handleAdd(query)}>Add</Button>
         </div>
         {focus && query.length > 1 && (
-          <div className="absolute z-10 flex flex-col gap-2 rounded-sm px-2 py-2 dark:bg-[#191a1b]">
+          <div className="absolute z-10 flex flex-col gap-2 rounded-sm bg-gray-100 px-2 py-2 dark:bg-[#191a1b]">
             {results.length === 0 && <p>Nothing was found.</p>}
             {results.map((each) => (
               <button
-                onClick={() => handleAdd(each)}
-                className="cursor-pointer px-3 py-1 hover:opacity-90"
+                onClick={() => handleAdd(each.id)}
+                className="flex cursor-pointer items-center gap-5 px-3 py-1 hover:opacity-90"
               >
-                {each}
+                <Avatar
+                  isBordered
+                  className="h-6 w-6 text-tiny"
+                  name={each.name}
+                  src={each.photo}
+                />
+                <span>{sort === "name" ? each.name : each.email}</span>
               </button>
             ))}
           </div>
