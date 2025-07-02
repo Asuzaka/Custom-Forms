@@ -37,7 +37,7 @@ export function GoogleLoginButton() {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include", // Required to send/receive cookies
+          credentials: "include",
           body: JSON.stringify({ token }),
         },
       );
@@ -45,13 +45,11 @@ export function GoogleLoginButton() {
       const data = await res.json();
 
       if (res.ok) {
-        console.log("User logged in!", data);
         navigate("/dashboard");
       } else {
         alert(data.message || "Login failed");
       }
-    } catch (error) {
-      console.error("Login error:", error);
+    } catch {
       alert("Something went wrong. Try again.");
     }
   }

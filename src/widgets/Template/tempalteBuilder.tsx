@@ -1,5 +1,5 @@
 import { DndContext } from "@dnd-kit/core";
-import { SortableItem } from "./SortableItem";
+import { SortableItem } from "./sortableItem";
 import { Button } from "@heroui/react";
 import {
   arrayMove,

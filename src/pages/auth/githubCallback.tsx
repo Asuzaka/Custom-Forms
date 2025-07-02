@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import { Spinner } from "@heroui/react";
+import { env } from "../../shared/config";
 
 export function GitHubCallback() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const authenticateWithGitHub = async () => {
@@ -15,17 +16,14 @@ export function GitHubCallback() {
       }
 
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/v1/auth/github`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify({ code }),
+        const response = await fetch(`${env.BACKEND_URL}/v1/auth/github`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+          credentials: "include",
+          body: JSON.stringify({ code }),
+        });
 
         const data = await response.json();
 
@@ -38,8 +36,6 @@ export function GitHubCallback() {
       } catch (err) {
         console.error("GitHub login error:", err);
         navigate("/");
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -47,8 +43,8 @@ export function GitHubCallback() {
   }, [navigate]);
 
   return (
-    <div className="flex h-screen items-center justify-center text-lg">
-      {loading ? "Logging in with GitHub..." : "Redirecting..."}
+    <div className="flex items-center justify-center text-lg">
+      <Spinner>Loading...</Spinner>
     </div>
   );
 }

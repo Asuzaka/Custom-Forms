@@ -1,17 +1,17 @@
 // Home
-export { Page as Home } from "./Home/Page";
+export { Page as Home } from "./home/page";
 // Auth
-export { SignUp } from "./Auth/Signup";
-export { SignIn } from "./Auth/Singin";
-export { GitHubCallback } from "./Auth/GithubCallback";
+export { SignUp } from "./auth/signup";
+export { SignIn } from "./auth/singin";
+export { GitHubCallback } from "./auth/githubCallback";
 // Dashboard
 export { Dashboard } from "../shared/components/Dashboard";
+// Template
+export { Template } from "./template/template";
+export { NewTemplate } from "./template/newTemplate";
 // Form
-export { Template } from "./Template/Template";
-export { NewTemplate } from "./Template/NewTemplate";
-// Submit
-export { FormPage } from "./Form/Form";
+export { FormPage } from "./form/form";
 // Error
-export { ErrorFallback } from "./Error/Error";
+export { ErrorFallback } from "./error/error";
 // 404
-export { NotFound } from "./404/NotFound";
+export { NotFound } from "./404/notFound";

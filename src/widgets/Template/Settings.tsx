@@ -1,6 +1,6 @@
 import { Input, Select, SelectItem, Switch, Textarea } from "@heroui/react";
-import { Tags } from "./Tags";
-import { Users } from "./Users";
+import { Tags } from "./tags";
+import { Users } from "./users";
 import { access, topics } from "../../shared/constants/settings";
 import { ClickToCopy } from "../../shared/ui/ClickCopy";
 import { env } from "../../shared/config";

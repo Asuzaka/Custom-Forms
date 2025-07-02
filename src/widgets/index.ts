@@ -1,26 +1,26 @@
 // Navbar Widgets
-export { Widget as Navbar } from "./Nav/Widget";
-export { SearchWithButton } from "./Nav/Search";
+export { Widget as Navbar } from "./nav/widget";
+export { SearchWithButton } from "./nav/search";
 // Dashboard Widgets
-export { Analytics } from "./Dashboard/Analytics";
-export { Overview } from "./Dashboard/Overview";
-export { UsersTable } from "./Dashboard/Users";
-export { TemplateTable } from "./Dashboard/Templates";
-export { ModalProvider } from "./Dashboard/Modal";
-export { GridTempaltes } from "./Dashboard/GridTemplates";
-export { TableTemplates } from "./Dashboard/TableTemplates";
-export { Toolbar } from "./Dashboard/Toolbar";
+export { Analytics } from "./dashboard/analytics";
+export { Overview } from "./dashboard/overview";
+export { UsersTable } from "./dashboard/users";
+export { TemplateTable } from "./dashboard/templates";
+export { ModalProvider } from "./dashboard/modal";
+export { GridTempaltes } from "./dashboard/gridTemplates";
+export { TableTemplates } from "./dashboard/tableTemplates";
+export { Toolbar } from "./dashboard/toolbar";
 // Template
-export { CheckBoxEditor } from "./Template/CheckBoxEditor";
-export { TempalteHeader } from "./Template/TemplateHeader";
-export { TemplateTabs } from "./Template/TempalteTabs";
-export { TemplateBuilder } from "./Template/TempalteBuilder";
-export { Comments } from "./Template/Comments";
-export { DescriptionLikes } from "./Template/Likes";
-export { Settings } from "./Template/Settings";
-export { SortableItem } from "./Template/SortableItem";
-export { Tags } from "./Template/Tags";
-export { Users } from "./Template/Users";
+export { CheckBoxEditor } from "./template/checkBoxEditor";
+export { TempalteHeader } from "./template/templateHeader";
+export { TemplateTabs } from "./template/tempalteTabs";
+export { TemplateBuilder } from "./template/tempalteBuilder";
+export { Comments } from "./template/comments";
+export { DescriptionLikes } from "./template/likes";
+export { Settings } from "./template/settings";
+export { SortableItem } from "./template/sortableItem";
+export { Tags } from "./template/tags";
+export { Users } from "./template/users";
 // Auth
-export { GoogleLoginButton } from "./Auth/GoogleButton";
-export { GitHubLoginButton } from "./Auth/GithubButton";
+export { GoogleLoginButton } from "./auth/googleButton";
+export { GitHubLoginButton } from "./auth/githubButton";

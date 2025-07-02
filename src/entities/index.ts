@@ -1,18 +1,18 @@
 // Navbar entities
-export type { Lang } from "./Nav/Languages";
+export type { Lang } from "./nav/languages";
 // Authentification entites
-export type { User } from "./Auth/User";
+export type { User } from "./auth/user";
+// Error entities
+export type { CustomErrorData } from "./error/error";
 // Dashboard entities
-export type { CustomErrorData } from "./Error/Error";
-// Dashboard entities
-export type { View } from "./Dashboard/View";
-export type { Statistics } from "./Dashboard/Statistics";
-export type { Form } from "./Dashboard/Form";
-export type { Sort, sortQuery } from "./Dashboard/Sort";
-export type { ModalType } from "./Dashboard/Modal";
+export type { View } from "./dashboard/view";
+export type { Statistics } from "./dashboard/statistics";
+export type { Form } from "./dashboard/form";
+export type { Sort, sortQuery } from "./dashboard/sort";
+export type { ModalType } from "./dashboard/modal";
 // Template entities
-export type { MainTab } from "./Template/MainTab";
-export type { Comment } from "./Template/Comment";
+export type { MainTab } from "./template/mainTab";
+export type { Comment } from "./template/comment";
 export type {
   QuestionBase,
   CheckboxTemplateQuestion,
@@ -22,6 +22,6 @@ export type {
   SingleLineTemplateQuestion,
   TemplateObject,
   TemplateQuestion,
-} from "./Template/Template";
+} from "./template/template";
 // Form entites
-export type { FormAnswer, FormObject } from "./Form/form";
+export type { FormAnswer, FormObject } from "./form/form";
