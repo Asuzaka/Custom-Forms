@@ -1,7 +1,7 @@
 import { Image } from "@heroui/react";
 import ReactMarkdown from "react-markdown";
 import type { TemplateObject } from "../../entities";
-import { DescriptionLikes } from "./likes";
+import { DescriptionLikes } from "./Likes";
 
 type Props = {
   newTemplate: TemplateObject;

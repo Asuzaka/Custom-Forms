@@ -6,6 +6,15 @@ export const route = {
     SIGNUP: {
       ROOT: "/signup",
     },
+    VERIFY: {
+      ROOT: "/verify/:token",
+    },
+    RESET: {
+      ROOT: "/resetPassword/:token",
+    },
+    FORGET: {
+      ROOT: "/forgetPassword",
+    },
   },
   DASHBOARD: {
     ROOT: "/dashboard",

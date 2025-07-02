@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router";
-import { NewTemplate } from "./newTemplate";
+import { NewTemplate } from "./NewTemplate";
 import { useGetTemplateQuery } from "../../shared/api/templateApi";
 import { Spinner } from "@heroui/react";
 import { useSelector } from "react-redux";

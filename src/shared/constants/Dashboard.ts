@@ -8,11 +8,6 @@ export const sort: Sort[] = [
     query: "date",
   },
   {
-    id: 2,
-    name: "sort by last seen",
-    query: "seen",
-  },
-  {
     id: 3,
     name: "sort by title",
     query: "title",

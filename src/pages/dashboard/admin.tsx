@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UserDashboard } from "./user";
+import { UserDashboard } from "./User";
 import { Card, Tab, Tabs } from "@heroui/react";
 import { Analytics, Overview, TemplateTable, UsersTable } from "../../widgets";
 

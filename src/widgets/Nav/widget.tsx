@@ -33,7 +33,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { logout } from "../../store/userSlice";
-import { SearchWithButton } from "./search";
+import { SearchWithButton } from "./Search";
 
 export function Widget() {
   const dispatch = useDispatch();
