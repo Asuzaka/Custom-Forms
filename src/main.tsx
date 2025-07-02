@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         path: route.TEMPLATE.CREATE,
         element: (
           <Protected>
-            <NewTemplate Template={undefined} />
+            <NewTemplate Template={undefined} editor={true} />
           </Protected>
         ),
       },

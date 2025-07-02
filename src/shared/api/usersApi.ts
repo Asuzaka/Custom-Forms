@@ -8,6 +8,7 @@ export const api = createApi({
     baseUrl: env.BACKEND_URL + "/v1/users",
     credentials: "include",
   }),
+  tagTypes: ["users"],
   endpoints: (builder) => ({
     getUsers: builder.mutation<
       { data: { users: User[] } },
@@ -19,11 +20,12 @@ export const api = createApi({
         body: data,
       }),
     }),
-    getAllUsers: builder.query<{ data: User[] }, void>({
+    getAllUsers: builder.query<{ data: { users: User[] } }, void>({
       query: () => ({
         url: "/",
         method: "GET",
       }),
+      providesTags: ["users"],
     }),
     blockUsers: builder.mutation<void, { users: string[] }>({
       query: (data) => ({
@@ -31,6 +33,7 @@ export const api = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["users"],
     }),
     unBlockUsers: builder.mutation<void, { users: string[] }>({
       query: (data) => ({
@@ -38,6 +41,31 @@ export const api = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["users"],
+    }),
+    changeToAdmin: builder.mutation<void, { users: string[] }>({
+      query: (data) => ({
+        url: "/admin",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["users"],
+    }),
+    changeToUser: builder.mutation<void, { users: string[] }>({
+      query: (data) => ({
+        url: "/user",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["users"],
+    }),
+    deleteUser: builder.mutation<void, { users: string[] }>({
+      query: (data) => ({
+        url: "/delete",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["users"],
     }),
   }),
 });
@@ -47,4 +75,7 @@ export const {
   useGetUsersMutation,
   useBlockUsersMutation,
   useUnBlockUsersMutation,
+  useChangeToAdminMutation,
+  useChangeToUserMutation,
+  useDeleteUserMutation,
 } = api;

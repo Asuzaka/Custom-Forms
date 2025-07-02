@@ -9,6 +9,8 @@ export type FormObject = {
 };
 
 export type FormAnswer = {
+  index: number;
+  text: string;
   id: string;
-  value: string | string[];
+  answer: string | string[];
 };

@@ -1,4 +1,4 @@
-import { HeroUIProvider } from "@heroui/react";
+import { HeroUIProvider, ToastProvider } from "@heroui/react";
 import { useHref, useNavigate } from "react-router";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
@@ -10,6 +10,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <HeroUIProvider navigate={navigate} useHref={useHref}>
+        <ToastProvider />
         <Layout />
       </HeroUIProvider>
     </Provider>

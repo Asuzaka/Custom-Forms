@@ -1,4 +1,4 @@
-import { Button } from "@heroui/react";
+import { Button, Checkbox } from "@heroui/react";
 import { X } from "lucide-react";
 import type { CheckboxTemplateQuestion } from "../../entities";
 
@@ -8,12 +8,14 @@ export function CheckBoxEditor({
   handleCheckboxTextChange,
   handleDeleteCheckboxOption,
   handleAddCheckboxOption,
+  handleCheckboxMultipleChange,
 }: {
   question: CheckboxTemplateQuestion;
   selectedId: string;
   handleCheckboxTextChange: (id: string, value: string) => void;
   handleDeleteCheckboxOption: (id: string) => void;
   handleAddCheckboxOption: () => void;
+  handleCheckboxMultipleChange: (multiline: boolean) => void;
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -39,11 +41,22 @@ export function CheckBoxEditor({
           ) : null}
         </div>
       ))}
-      {selectedId === question.id ? (
+      {selectedId === question.id && (
         <Button onPress={handleAddCheckboxOption} size="sm">
           Add new Option
         </Button>
-      ) : null}
+      )}
+      {selectedId === question.id && (
+        <div className="px-1">
+          <Checkbox
+            size="lg"
+            isSelected={question.multiple}
+            onValueChange={(e) => handleCheckboxMultipleChange(e)}
+          >
+            Multiple selection
+          </Checkbox>
+        </div>
+      )}
     </div>
   );
 }

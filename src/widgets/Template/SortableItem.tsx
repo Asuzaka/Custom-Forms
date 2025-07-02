@@ -27,6 +27,7 @@ export function SortableItem({
   question,
   onQuestionChange,
   handleQuestionDelete,
+  editor,
 }: {
   selectedId: string;
   setSelectedId: Dispatch<SetStateAction<string>>;
@@ -34,6 +35,7 @@ export function SortableItem({
   question: TemplateQuestion;
   onQuestionChange: (id: string, updatedQuestion: TemplateQuestion) => void;
   handleQuestionDelete: (id: string) => void;
+  editor: boolean;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -53,7 +55,13 @@ export function SortableItem({
     onQuestionChange(id, { ...question, required: isRequired });
   };
 
+  const handleCheckboxMultipleChange = (multiline: boolean) => {
+    if (question.type !== "checkbox") return;
+    onQuestionChange(id, { ...question, multiple: multiline });
+  };
+
   const handleCheckboxTextChange = (optionId: string, newText: string) => {
+    if (!editor) return;
     if (question.type !== "checkbox") return;
 
     const updatedOptions = question.options.map((option) =>
@@ -120,6 +128,7 @@ export function SortableItem({
       <div
         className="flex flex-col justify-between gap-2"
         onClick={() => {
+          if (!editor) return;
           setSelectedId(question.id);
         }}
       >
@@ -197,6 +206,7 @@ export function SortableItem({
             handleAddCheckboxOption,
             handleCheckboxTextChange,
             handleDeleteCheckboxOption,
+            handleCheckboxMultipleChange,
             selected: selectedId,
           })}
         </div>

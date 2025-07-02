@@ -17,7 +17,16 @@ export const api = createApi({
       }),
       providesTags: ["Template"],
     }),
-
+    getAllTemplates: builder.query<
+      { data: { templates: TemplateObject[] } },
+      string
+    >({
+      query: (params) => ({
+        url: `/templates${params}`,
+        method: "GET",
+      }),
+      providesTags: ["Template"],
+    }),
     createTemplate: builder.mutation<TemplateObject, TemplateObject>({
       query: (data) => ({
         url: "/",
@@ -27,7 +36,7 @@ export const api = createApi({
       invalidatesTags: ["Template"],
     }),
 
-    getTemplate: builder.query<TemplateObject, string>({
+    getTemplate: builder.query<{ data: TemplateObject }, string>({
       query: (id) => ({
         url: `/${id}`,
         method: "GET",
@@ -37,20 +46,29 @@ export const api = createApi({
 
     updateTemplate: builder.mutation<
       TemplateObject,
-      { id: string; data: TemplateObject }
+      { id: string; data: Partial<TemplateObject> }
     >({
       query: ({ id, data }) => ({
         url: `/${id}`,
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: (_, __, { id }) => [{ type: "Template", id }],
+      invalidatesTags: ["Template"],
     }),
 
     deleteTemplate: builder.mutation<void, string>({
       query: (id) => ({
         url: `/${id}`,
         method: "DELETE",
+      }),
+      invalidatesTags: ["Template"],
+    }),
+
+    deleteTemplates: builder.mutation<void, { ids: string[] }>({
+      query: (data) => ({
+        url: "/templates",
+        method: "POST",
+        body: data,
       }),
       invalidatesTags: ["Template"],
     }),
@@ -63,4 +81,6 @@ export const {
   useGetTemplateQuery,
   useUpdateTemplateMutation,
   useDeleteTemplateMutation,
+  useDeleteTemplatesMutation,
+  useGetAllTemplatesQuery,
 } = api;

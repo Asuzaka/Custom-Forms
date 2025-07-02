@@ -1,9 +1,11 @@
-import { Input, Select, SelectItem, Textarea } from "@heroui/react";
-import type { TemplateObject } from "../../entities";
-import type { SetStateAction } from "react";
+import { Input, Select, SelectItem, Switch, Textarea } from "@heroui/react";
 import { Tags } from "./tags";
 import { Users } from "./users";
 import { access, topics } from "../../shared/constants/settings";
+import { ClickToCopy } from "../../shared/ui/ClickCopy";
+import { env } from "../../shared/config";
+import type { SetStateAction } from "react";
+import type { TemplateObject } from "../../entities";
 
 type Props = {
   newTemplate: TemplateObject;
@@ -98,6 +100,23 @@ export function Settings({
           setNewTemplate={setNewTemplate}
           newTemplate={newTemplate}
         />
+      )}
+      <div className="flex items-center gap-2">
+        <label className="text-lg font-medium">Publish: </label>
+        <Switch
+          isSelected={newTemplate.publish}
+          onValueChange={(val) =>
+            setNewTemplate({ ...newTemplate, publish: val })
+          }
+        ></Switch>
+      </div>
+      {newTemplate.publish && (
+        <div className="flex items-center gap-2">
+          <ClickToCopy
+            text={`${env.FRONTEND_URL}/form/${newTemplate._id}`}
+            label="Your link to Form"
+          />
+        </div>
       )}
     </div>
   );

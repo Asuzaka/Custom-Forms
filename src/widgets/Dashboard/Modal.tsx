@@ -9,23 +9,32 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@heroui/react";
+import {
+  useDeleteTemplateMutation,
+  useUpdateTemplateMutation,
+} from "../../shared/api/templateApi";
 
 type Props = {
   isOpen: boolean;
   onOpenChange: () => void;
   modalType: ModalType;
-  active: TemplateObject | undefined;
+  template: TemplateObject | undefined;
 };
 
 export function ModalProvider({
   isOpen = false,
   onOpenChange,
   modalType,
-  active,
+  template,
 }: Props) {
   const title = modalType === "delete" ? "Delete" : "Rename";
-  const [value, setValue] = useState<string>(active?.title || "");
+  const [value, setValue] = useState<string | undefined>(template?.title);
 
+  const [deleteTemplate, { isLoading }] = useDeleteTemplateMutation();
+  const [updateTemplate, { isLoading: LoadingUpdate }] =
+    useUpdateTemplateMutation();
+
+  if (!template) return;
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
@@ -50,7 +59,16 @@ export function ModalProvider({
                   <Button color="primary" onPress={onClose}>
                     Cancel
                   </Button>
-                  <Button color="danger" variant="light" onPress={onClose}>
+                  <Button
+                    color="danger"
+                    variant="light"
+                    isLoading={isLoading}
+                    onPress={() => {
+                      if (!template._id) return;
+                      deleteTemplate(template._id);
+                      onClose();
+                    }}
+                  >
                     Delete
                   </Button>
                 </>
@@ -60,7 +78,18 @@ export function ModalProvider({
                   <Button color="danger" variant="light" onPress={onClose}>
                     Cancel
                   </Button>
-                  <Button color="primary" onPress={onClose}>
+                  <Button
+                    color="primary"
+                    isLoading={LoadingUpdate}
+                    onPress={() => {
+                      if (!template._id) return;
+                      updateTemplate({
+                        id: template?._id,
+                        data: { title: value },
+                      });
+                      onClose();
+                    }}
+                  >
                     Rename
                   </Button>
                 </>

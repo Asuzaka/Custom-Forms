@@ -1,15 +1,19 @@
 export type TemplateObject = {
+  _id?: string;
   id?: string;
   title: string;
   topic: string;
   description: string;
   tags: string[];
-  image: File | string;
+  image: string;
   access: "public" | "restricted";
   allowedUsers: string[];
   creator: string;
   questions: TemplateQuestion[];
   createdAt?: Date;
+  publish: boolean;
+  likes: number;
+  likedBy: string[];
 };
 
 export type QuestionBase = {

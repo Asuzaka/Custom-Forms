@@ -1,6 +1,6 @@
 import { Input, NumberInput, Textarea } from "@heroui/react";
-import type { TemplateQuestion } from "../../entities";
 import { CheckBoxEditor } from "../../widgets";
+import type { TemplateQuestion } from "../../entities";
 
 export function renderAnswerInput(functions: {
   question: TemplateQuestion;
@@ -8,6 +8,7 @@ export function renderAnswerInput(functions: {
   handleCheckboxTextChange: (id: string, value: string) => void;
   handleDeleteCheckboxOption: (id: string) => void;
   handleAddCheckboxOption: () => void;
+  handleCheckboxMultipleChange: (multiline: boolean) => void;
 }) {
   switch (functions.question.type) {
     case "singleLine":
@@ -38,6 +39,7 @@ export function renderAnswerInput(functions: {
           handleAddCheckboxOption={functions.handleAddCheckboxOption}
           handleDeleteCheckboxOption={functions.handleDeleteCheckboxOption}
           handleCheckboxTextChange={functions.handleCheckboxTextChange}
+          handleCheckboxMultipleChange={functions.handleCheckboxMultipleChange}
         />
       );
     default:

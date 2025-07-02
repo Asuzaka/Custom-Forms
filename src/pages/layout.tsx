@@ -21,10 +21,10 @@ export function Layout() {
       }
 
       const user = {
+        _id: userData._id,
         email: userData.email,
         name: userData.name,
         photo: userData.photo,
-        id: userData.id,
         role: userData.role,
         status: userData.status,
       };

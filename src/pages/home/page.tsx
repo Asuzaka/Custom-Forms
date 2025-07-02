@@ -162,6 +162,7 @@ const tags: Tag[] = [
 
 export function Page() {
   const navigate = useNavigate();
+
   return (
     <>
       <h1 className="mt-10 text-3xl font-bold">Latest Templates</h1>

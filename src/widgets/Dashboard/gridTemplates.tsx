@@ -15,7 +15,7 @@ export function GridTempaltes({ templates }: Props) {
           key={index}
           isPressable
           shadow="sm"
-          onPress={() => navigate(`/template/${item.id}`)}
+          onPress={() => navigate(`/template/${item._id}`)}
         >
           <CardBody className="overflow-visible p-0">
             <Image
@@ -23,14 +23,14 @@ export function GridTempaltes({ templates }: Props) {
               className="h-[140px] w-full object-cover"
               radius="lg"
               shadow="sm"
-              src={typeof item.image === "string" ? item.image : ""}
+              src={item.image}
               width="100%"
             />
           </CardBody>
           <CardFooter className="flex-col justify-between text-small">
             <b>{item.title}</b>
             <p className="text-default-500">
-              {item.createdAt?.toLocaleString()}
+              {item.createdAt ? new Date(item.createdAt).toLocaleString() : ""}
             </p>
           </CardFooter>
         </Card>

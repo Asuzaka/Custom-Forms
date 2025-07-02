@@ -2,52 +2,19 @@ import type { TemplateObject } from "../../entities";
 
 export function returnNewFormObject(id: string): TemplateObject {
   return {
-    image: "",
+    image:
+      "https://hxfqjxaynywivthkixwq.supabase.co/storage/v1/object/public/images//forms-in-word.jpg",
     topic: "other",
-    tags: ["cool", "education", "spring"],
+    tags: [],
     description: "Form description",
     title: "New Form",
     creator: id,
     access: "public",
-    allowedUsers: ["685e6f398b63a75bba91557b"],
-    questions: [
-      {
-        id: crypto.randomUUID(),
-        type: "singleLine",
-        text: "Where do you live?",
-        required: true,
-        placeholder: "Type your answer...",
-        visible: true,
-      },
-      {
-        id: crypto.randomUUID(),
-        type: "multiLine",
-        text: "Explain your biggest challenge this year.",
-        required: false,
-        placeholder: "Write your response here...",
-        visible: true,
-      },
-      {
-        id: crypto.randomUUID(),
-        type: "numberInput",
-        text: "How many siblings do you have?",
-        required: false,
-        visible: true,
-      },
-      {
-        id: crypto.randomUUID(),
-        type: "checkbox",
-        text: "Which languages do you speak?",
-        required: Math.random() > 0.5,
-        visible: true,
-        options: [
-          { id: crypto.randomUUID(), text: "English" },
-          { id: crypto.randomUUID(), text: "Spanish" },
-          { id: crypto.randomUUID(), text: "French" },
-        ],
-        multiple: true,
-      },
-    ],
+    allowedUsers: [],
+    publish: false,
+    likes: 0,
+    likedBy: [],
+    questions: [],
   };
 }
 
@@ -59,9 +26,7 @@ export function returnSampleSingleLine(id: string) {
     text: "Enter your text?",
     description: "Enter description",
     visible: true,
-    answer: "",
     placeholder: "Type your answer here...",
-    maxLength: 100,
   };
 }
 
@@ -72,8 +37,6 @@ export function returnSampleMultiLine(id: string) {
     required: false,
     text: "Enter your text?",
     visible: true,
-    answer: "",
-    lines: 4,
     placeholder: "Type your answer here...",
   };
 }
@@ -85,7 +48,6 @@ export function returnSampleNumber(id: string) {
     required: true,
     text: "Enter your number?",
     visible: true,
-    answer: 0,
   };
 }
 
