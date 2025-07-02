@@ -1,15 +1,15 @@
 // Navbar entities
-export type { Lang } from "./nav/languages";
+export type { Lang } from "./Nav/Languages";
 // Authentification entites
 export type { User } from "./auth/user";
 // Error entities
 export type { CustomErrorData } from "./error/error";
 // Dashboard entities
-export type { View } from "./dashboard/view";
-export type { Statistics } from "./dashboard/statistics";
-export type { Form } from "./dashboard/form";
-export type { Sort, sortQuery } from "./dashboard/sort";
-export type { ModalType } from "./dashboard/modal";
+export type { View } from "./Dashboard/view";
+export type { Statistics } from "./Dashboard/statistics";
+export type { Form } from "./Dashboard/form";
+export type { Sort, sortQuery } from "./Dashboard/sort";
+export type { ModalType } from "./Dashboard/modal";
 // Template entities
 export type { MainTab } from "./template/maintab";
 export type { Comment } from "./template/comment";

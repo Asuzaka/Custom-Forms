@@ -22,7 +22,7 @@ import {
   PencilLine,
   Trash2,
 } from "lucide-react";
-import { ModalProvider } from "./modal";
+import { ModalProvider } from "./Modal";
 
 type Props = {
   templates: TemplateObject[];
