@@ -6,6 +6,6 @@ export {
   returnSampleMultiLine,
   returnSampleNumber,
   returnSampleSingleLine,
-} from "./forms/generateNewForm";
-export { renderAnswerInput } from "./forms/renderAnswerInput";
-export { renderInput } from "./forms/renderInput";
+} from "./forms/generatenewform";
+export { renderAnswerInput } from "./forms/renderanswerinput";
+export { renderInput } from "./forms/renderinput";
