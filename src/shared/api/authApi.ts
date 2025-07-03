@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { User, UserReg } from "../../entities";
+import type { User, UserLog, UserReg } from "../../entities";
 import { env } from "../config";
 
 export const api = createApi({
@@ -8,22 +8,33 @@ export const api = createApi({
     baseUrl: env.BACKEND_URL + "/v1/auth",
     credentials: "include",
   }),
+  tagTypes: ["user"],
   endpoints: (builder) => ({
-    signin: builder.mutation<
-      { user: User },
-      { email: string; password: string }
-    >({
+    signin: builder.mutation<{ user: User }, UserLog>({
       query: (user) => ({
         url: "/signin",
         method: "POST",
         body: user,
       }),
+      transformErrorResponse: (response: {
+        data: { message: string };
+        status: number;
+      }) => ({
+        error: response.data?.message || "Signin failed",
+      }),
+      invalidatesTags: ["user"],
     }),
     signup: builder.mutation<{ user: User }, UserReg>({
       query: (user) => ({
         url: "/signup",
         method: "POST",
         body: user,
+      }),
+      transformErrorResponse: (response: {
+        data: { message: string };
+        status: number;
+      }) => ({
+        error: response.data?.message || "Signup failed",
       }),
     }),
     signout: builder.query<void, void>({
@@ -37,12 +48,20 @@ export const api = createApi({
         url: "/authenticated",
         method: "GET",
       }),
+      providesTags: ["user"],
     }),
-    verify: builder.query<void, string>({
+    verify: builder.mutation<void, string>({
       query: (token) => ({
         url: `/verify/${token}`,
-        method: "GET",
+        method: "POST",
       }),
+      transformErrorResponse: (response: {
+        data: { message: string };
+        status: number;
+      }) => ({
+        error: response.data?.message || "Verify failed",
+      }),
+      invalidatesTags: ["user"],
     }),
 
     forget: builder.mutation<void, { email: string }>({
@@ -50,6 +69,12 @@ export const api = createApi({
         url: "/forgetPassword",
         method: "POST",
         body: data,
+      }),
+      transformErrorResponse: (response: {
+        data: { message: string };
+        status: number;
+      }) => ({
+        error: response.data?.message || "Forget failed",
       }),
     }),
     reset: builder.mutation<
@@ -61,6 +86,13 @@ export const api = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["user"],
+      transformErrorResponse: (response: {
+        data: { message: string };
+        status: number;
+      }) => ({
+        error: response.data?.message || "Reset failed",
+      }),
     }),
   }),
 });
@@ -68,7 +100,7 @@ export const api = createApi({
 export const {
   useResetMutation,
   useForgetMutation,
-  useVerifyQuery,
+  useVerifyMutation,
   useLazyAuthenticatedQuery,
   useSignoutQuery,
   useSignupMutation,

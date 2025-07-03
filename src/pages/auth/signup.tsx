@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { Button, Form, Input, Link } from "@heroui/react";
+import { useEffect, useState } from "react";
+import { addToast, Button, Form, Input, Link } from "@heroui/react";
 import { GitHubLoginButton, GoogleLoginButton } from "../../widgets";
 import validator from "validator";
 import { useSignupMutation } from "../../shared/api/authApi";
 import type { UserReg } from "../../entities";
 
 export function SignUp() {
-  const [signup, { isLoading, isSuccess }] = useSignupMutation();
+  const [signup, { isLoading, isSuccess, error }] = useSignupMutation();
 
   const [errors, setErrors] = useState({});
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     let any: boolean = false;
 
@@ -22,10 +22,24 @@ export function SignUp() {
       }));
       any = true;
     }
-    console.log(data);
+
     if (any) return;
-    signup(data as UserReg);
+    try {
+      await signup(data as UserReg).unwrap();
+    } catch {
+      // RTK HANDLES
+    }
   }
+
+  useEffect(() => {
+    if (error) {
+      addToast({
+        title: "Error",
+        description: (error as { error: string }).error,
+        timeout: 3000,
+      });
+    }
+  }, [error]);
 
   return (
     <div className="flex items-center justify-center py-25">

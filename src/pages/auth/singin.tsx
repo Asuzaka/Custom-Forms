@@ -1,17 +1,37 @@
-import { useState } from "react";
-import { Button, Form, Input, Link } from "@heroui/react";
+import { useEffect } from "react";
+import { addToast, Button, Form, Input, Link } from "@heroui/react";
 import { GitHubLoginButton, GoogleLoginButton } from "../../widgets";
+import { useSigninMutation } from "../../shared/api/authApi";
+import type { UserLog } from "../../entities";
+import { useNavigate } from "react-router";
 
 export function SignIn() {
-  const [errors, setErrors] = useState({});
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const navigate = useNavigate();
+  const [signin, { isLoading, error, isSuccess }] = useSigninMutation();
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
 
-    console.log(data);
-    setErrors({});
+    try {
+      await signin(data as UserLog);
+    } catch {
+      // RTK HANDLEs
+    }
   }
+
+  useEffect(() => {
+    if (error)
+      addToast({
+        title: "Error",
+        description: (error as { error: string }).error,
+        timeout: 3000,
+      });
+  }, [error]);
+
+  useEffect(() => {
+    if (isSuccess) navigate("/dashboard");
+  }, [isSuccess, navigate]);
 
   return (
     <div className="flex items-center justify-center py-25">
@@ -19,7 +39,6 @@ export function SignIn() {
         <h1 className="py-3 text-center text-4xl font-extrabold">Sign in</h1>
         <p className="py-2 text-lg">Sign in to work with forms</p>
         <Form
-          validationErrors={errors}
           onSubmit={onSubmit}
           className="flex w-full max-w-xl flex-col gap-4"
         >
@@ -50,7 +69,7 @@ export function SignIn() {
               }
             }}
           />
-          <Button fullWidth color="primary" type="submit">
+          <Button isLoading={isLoading} fullWidth color="primary" type="submit">
             Sign in
           </Button>
         </Form>
