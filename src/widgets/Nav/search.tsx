@@ -5,7 +5,7 @@ import {
   Spinner,
   useDisclosure,
 } from "@heroui/react";
-import { Search } from "lucide-react";
+import { FileText, MessageCircle, Search, Tag } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLazyGlobalSearchQuery } from "../../shared/api/searchApi";
 import { useNavigate } from "react-router";
@@ -79,61 +79,90 @@ export function SearchWithButton() {
                   ESC
                 </button>
               </div>
+              {isFetching ? (
+                <div className="flex justify-center py-6">
+                  <Spinner size="lg">Searching...</Spinner>
+                </div>
+              ) : (
+                <div className="space-y-4 px-4 py-2 text-sm">
+                  {results.templates.length > 0 && (
+                    <div>
+                      <h2 className="mb-1 flex items-center gap-1 font-semibold text-gray-700 dark:text-white">
+                        <FileText size={16} />
+                        Templates
+                      </h2>
+                      <ul className="space-y-1">
+                        {results.templates.map((item) => (
+                          <li
+                            key={item._id}
+                            onClick={() => navigate(`/template/${item._id}`)}
+                            className="cursor-pointer rounded-md px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800"
+                          >
+                            {item.title}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-              {isFetching && <Spinner>Loading...</Spinner>}
-
-              {!isFetching && (
-                <>
-                  <div>
-                    <h1>Comments:</h1>
-                    <ul className="p-2">
-                      {results.comments.map((item, index) => (
-                        <li
-                          onClick={() => navigate(`/template/${item.template}`)}
-                          key={index}
-                          className="py-1 text-gray-800 dark:text-white"
-                        >
-                          {item.text}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h1>Tags:</h1>
-                    <ul className="p-2">
-                      {results.tags.map((item, index) => (
-                        <div key={item.tag}>
-                          <h1>{item.tag}</h1>
-                          {item.templates.map((each) => (
-                            <li
-                              onProgress={() =>
-                                navigate(`/template/${each._id}`)
-                              }
-                              key={index}
-                              className="py-1 text-gray-800 dark:text-white"
-                            >
-                              {each.title}
-                            </li>
-                          ))}
+                  {results.tags.length > 0 && (
+                    <div>
+                      <h2 className="mb-1 flex items-center gap-1 font-semibold text-gray-700 dark:text-white">
+                        <Tag size={16} />
+                        Tags
+                      </h2>
+                      {results.tags.map((tagGroup) => (
+                        <div key={tagGroup.tag} className="mb-2">
+                          <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                            #{tagGroup.tag}
+                          </h3>
+                          <ul className="mt-1 ml-2 space-y-1">
+                            {tagGroup.templates.map((tpl) => (
+                              <li
+                                key={tpl._id}
+                                onClick={() => navigate(`/template/${tpl._id}`)}
+                                className="cursor-pointer rounded-md px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800"
+                              >
+                                {tpl.title}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h1>Templates:</h1>
-                    <ul className="p-2">
-                      {results.templates.map((item, index) => (
-                        <li
-                          onClick={() => navigate(`/template/${item._id}`)}
-                          key={index}
-                          className="py-1 text-gray-800 dark:text-white"
-                        >
-                          {item.title}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </>
+                    </div>
+                  )}
+
+                  {results.comments.length > 0 && (
+                    <div>
+                      <h2 className="mb-1 flex items-center gap-1 font-semibold text-gray-700 dark:text-white">
+                        <MessageCircle size={16} />
+                        Comments
+                      </h2>
+                      <ul className="space-y-1">
+                        {results.comments.map((comment, index) => (
+                          <li
+                            key={index}
+                            onClick={() =>
+                              navigate(`/template/${comment.template}`)
+                            }
+                            className="cursor-pointer rounded-md px-2 py-1 text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-800"
+                          >
+                            {comment.text}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {query &&
+                    results.templates.length === 0 &&
+                    results.tags.length === 0 &&
+                    results.comments.length === 0 && (
+                      <div className="text-center text-gray-500 dark:text-gray-400">
+                        No results found for "{query}"
+                      </div>
+                    )}
+                </div>
               )}
             </ModalBody>
           )}
