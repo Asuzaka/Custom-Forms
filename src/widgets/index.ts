@@ -11,6 +11,7 @@ export { GridTempaltes } from "./Dashboard/gridTemplates";
 export { TableTemplates } from "./Dashboard/tableTemplates";
 export { Toolbar } from "./Dashboard/toolbar";
 // Template
+export { Submissions } from "./Template/submissions";
 export { CheckBoxEditor } from "./Template/CheckBoxEditor";
 export { TempalteHeader } from "./Template/templateHeader";
 export { TemplateTabs } from "./Template/tempalteTabs";

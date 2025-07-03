@@ -114,7 +114,10 @@ export function Page() {
             items={popular}
           >
             {(item) => (
-              <TableRow key={item._id}>
+              <TableRow
+                onClick={() => navigate(`/template/${item._id}`)}
+                key={item._id}
+              >
                 {(columnKey) => (
                   <TableCell>
                     {columnKey === "creator.name"

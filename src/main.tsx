@@ -52,11 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path: route.TEMPLATE.DETAIL,
-        element: (
-          <Protected>
-            <Template />
-          </Protected>
-        ),
+        element: <Template />,
       },
       {
         path: route.FORM.ROOT,

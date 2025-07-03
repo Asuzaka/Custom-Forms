@@ -38,11 +38,9 @@ export function Template() {
   const creator = data?.data.creator === user?._id;
 
   return (
-    <>
-      <SocketProvider>
-        <NewTemplate Template={data?.data} editor={creator} />
-        <Comments templateId={data?.data._id} />
-      </SocketProvider>
-    </>
+    <SocketProvider>
+      <NewTemplate Template={data?.data} editor={creator} />
+      <Comments templateId={data?.data._id} />
+    </SocketProvider>
   );
 }

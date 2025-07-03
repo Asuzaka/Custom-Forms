@@ -5,6 +5,7 @@ import type { RootState } from "../../store/store";
 import type { MainTab, TemplateObject, TemplateQuestion } from "../../entities";
 import {
   Settings,
+  Submissions,
   TempalteHeader,
   TemplateBuilder,
   TemplateTabs,
@@ -115,6 +116,10 @@ export function NewTemplate({
           handleQuestionDelete={handleQuestionDelete}
           addNewQuestion={addNewQuestion}
         />
+      )}
+
+      {mainTab === "submissions" && newTemplate._id && (
+        <Submissions id={newTemplate._id} />
       )}
     </>
   );

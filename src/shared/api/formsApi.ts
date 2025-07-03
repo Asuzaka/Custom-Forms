@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { env } from "../config";
-import type { FormAnswer, FormObject, TemplateObject } from "../../entities";
+import type {
+  FormAnswer,
+  FormObject,
+  Submission,
+  TemplateObject,
+} from "../../entities";
 
 export const api = createApi({
   reducerPath: "formApi",
@@ -19,7 +24,7 @@ export const api = createApi({
         body: { answers },
       }),
     }),
-    getTemplateForms: builder.query<FormObject[], string>({
+    getTemplateForms: builder.query<{ data: Submission[] }, string>({
       query: (id) => ({
         url: `/template/${id}`,
         method: "GET",

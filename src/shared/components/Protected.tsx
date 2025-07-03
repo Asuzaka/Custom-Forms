@@ -14,7 +14,7 @@ export function Protected({ children }: { children: React.ReactNode }) {
     );
   }
 
-  if (!user) {
+  if (!user.user) {
     return <Navigate to="/signin" />;
   }
 

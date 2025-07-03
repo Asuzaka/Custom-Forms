@@ -18,6 +18,7 @@ export type { Form } from "./Dashboard/form";
 export type { Sort, sortQuery } from "./Dashboard/sort";
 export type { ModalType } from "./Dashboard/modal";
 // Template entities
+export type { Submission } from "./template/submission";
 export type { MainTab } from "./template/maintab";
 export type { Comment } from "./template/comment";
 export type {
