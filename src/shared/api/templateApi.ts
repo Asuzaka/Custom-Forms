@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { env } from "../config";
-import type { TemplateObject } from "../../entities";
+import type { FullTemplate, TemplateObject } from "../../entities";
 
 export const api = createApi({
   reducerPath: "templateApi",
@@ -72,6 +72,25 @@ export const api = createApi({
       }),
       invalidatesTags: ["Template"],
     }),
+
+    getLatestTemplates: builder.query<{ data: FullTemplate[] }, void>({
+      query: () => ({
+        url: "/latest",
+        method: "GET",
+      }),
+    }),
+    getPopularTemplates: builder.query<{ data: FullTemplate[] }, void>({
+      query: () => ({
+        url: "/popular/likes",
+        method: "GET",
+      }),
+    }),
+    getTags: builder.query<{ data: { _id: string; count: number }[] }, void>({
+      query: () => ({
+        url: "/tags",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -83,4 +102,7 @@ export const {
   useDeleteTemplateMutation,
   useDeleteTemplatesMutation,
   useGetAllTemplatesQuery,
+  useGetLatestTemplatesQuery,
+  useGetPopularTemplatesQuery,
+  useGetTagsQuery,
 } = api;

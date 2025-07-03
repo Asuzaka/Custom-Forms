@@ -1,5 +1,7 @@
 // Navbar entities
 export type { Lang } from "./Nav/Languages";
+// Home entities
+export type { FullTemplate } from "./home/template";
 // Authentification entites
 export type { User } from "./auth/user";
 export type { UserLog } from "./auth/signin";

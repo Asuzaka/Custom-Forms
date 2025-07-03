@@ -11,52 +11,18 @@ import {
   TableCell,
   getKeyValue,
   Button,
+  Spinner,
 } from "@heroui/react";
 
 import { Calendar, TagIcon, User } from "lucide-react";
 import { useNavigate } from "react-router";
-
-type Tag = {
-  name: string;
-  count: number;
-};
-const rows = [
-  {
-    key: "1",
-    title: "Customer Feedback Form",
-    author: "John Doe",
-    likes: "89",
-    submissions: "432",
-  },
-  {
-    key: "2",
-    title: "Event Registration",
-    author: "Jane Smith",
-    likes: "76",
-    submissions: "315",
-  },
-  {
-    key: "3",
-    title: "Job Application",
-    author: "Mike Johnson",
-    likes: "67",
-    submissions: "281",
-  },
-  {
-    key: "4",
-    title: "Product Order Form",
-    author: "Sarah Williams",
-    likes: "54",
-    submissions: "198",
-  },
-  {
-    key: "5",
-    title: "Contact Form",
-    author: "Alex Brown",
-    likes: "48",
-    submissions: "176",
-  },
-];
+import {
+  useGetLatestTemplatesQuery,
+  useGetPopularTemplatesQuery,
+  useGetTagsQuery,
+} from "../../shared/api/templateApi";
+import { useEffect, useState } from "react";
+import type { FullTemplate } from "../../entities";
 
 const columns = [
   {
@@ -64,154 +30,83 @@ const columns = [
     label: "Title",
   },
   {
-    key: "author",
+    key: "creator.name",
     label: "Author",
   },
   {
     key: "likes",
     label: "Likes",
   },
-  {
-    key: "submissions",
-    label: "Submissions",
-  },
-];
-
-const tags: Tag[] = [
-  {
-    name: "feedback",
-    count: 24,
-  },
-  {
-    name: "survey",
-    count: 18,
-  },
-  {
-    name: "customer",
-    count: 15,
-  },
-  {
-    name: "registration",
-    count: 12,
-  },
-  {
-    name: "event",
-    count: 10,
-  },
-  {
-    name: "application",
-    count: 9,
-  },
-  {
-    name: "job",
-    count: 8,
-  },
-  {
-    name: "contact",
-    count: 7,
-  },
-  {
-    name: "order",
-    count: 6,
-  },
-  {
-    name: "product",
-    count: 5,
-  },
-  {
-    name: "ecommerce",
-    count: 4,
-  },
-  {
-    name: "education",
-    count: 4,
-  },
-  {
-    name: "newsletter",
-    count: 3,
-  },
-  {
-    name: "subscription",
-    count: 3,
-  },
-  {
-    name: "payment",
-    count: 2,
-  },
-  {
-    name: "donation",
-    count: 2,
-  },
-  {
-    name: "booking",
-    count: 2,
-  },
-  {
-    name: "reservation",
-    count: 1,
-  },
-  {
-    name: "appointment",
-    count: 1,
-  },
-  {
-    name: "review",
-    count: 1,
-  },
 ];
 
 export function Page() {
   const navigate = useNavigate();
+  const [popular, setPopular] = useState<FullTemplate[]>([]);
+  const { data: templatesData } = useGetLatestTemplatesQuery();
+  const { data: popularData, isLoading } = useGetPopularTemplatesQuery();
+  const { data: tagsData } = useGetTagsQuery();
+
+  useEffect(() => {
+    if (popularData) {
+      setPopular(popularData.data);
+    }
+  }, [popularData]);
 
   return (
     <>
       <h1 className="mt-10 text-3xl font-bold">Latest Templates</h1>
       <div className="grid grid-cols-3 gap-5 py-10">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <Card
-            key={index}
-            isPressable
-            shadow="sm"
-            isFooterBlurred
-            className="flex min-w-[200px] border-none"
-            radius="lg"
-          >
-            <CardBody className="h-[50%] overflow-visible p-0">
-              <Image
-                alt="Woman listing to music"
-                className="object-cover"
-                w-full="true"
-                height="200px"
-                src="https://heroui.com/images/hero-card.jpeg"
-                width="100%"
-              />
-            </CardBody>
-            <CardFooter>
-              <div className="flex flex-col gap-2">
-                {/* Forms Theme */}
-                <h1 className="text-xl font-bold">Customer Feedback Form</h1>
-                {/* Forms description */}
-                <p className="font-thin">
-                  Collect feedback from customers about your products or
-                  services
-                </p>
-                {/* Publisher */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    <User />
-                    <span>John Doe</span>
+        {templatesData ? (
+          templatesData.data.map((template, index) => (
+            <Card
+              key={index}
+              onPress={() => navigate(`/template/${template._id}`)}
+              isPressable
+              shadow="sm"
+              isFooterBlurred
+              className="flex min-w-[200px] border-none"
+              radius="lg"
+            >
+              <CardBody className="h-[50%] overflow-visible p-0">
+                <Image
+                  alt={template.title}
+                  className="object-cover"
+                  w-full="true"
+                  height="200px"
+                  src={template.image}
+                  width="100%"
+                />
+              </CardBody>
+              <CardFooter>
+                <div className="flex w-full flex-col items-center gap-2">
+                  {/* Forms Theme */}
+                  <h1 className="text-xl font-bold">{template.title}</h1>
+                  {/* Forms description */}
+                  <p className="font-thin">{template.description}</p>
+                  {/* Publisher */}
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="flex items-center gap-1">
+                      <User />
+                      <span>{template.creator.name}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Calendar />
+                      <span>
+                        {template.createdAt
+                          ? new Date(template.createdAt).toLocaleDateString()
+                          : ""}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <Calendar />
-                    <span>15.05.2025</span>
-                  </div>
+                  {/* Tags */}
+                  <div></div>
                 </div>
-                {/* Tags */}
-                <div></div>
-              </div>
-            </CardFooter>
-          </Card>
-        ))}
+              </CardFooter>
+            </Card>
+          ))
+        ) : (
+          <Spinner>Loading...</Spinner>
+        )}
       </div>
       <h1 className="text-3xl font-bold">Popular Templates</h1>
       <div className="py-10">
@@ -221,11 +116,19 @@ export function Page() {
               <TableColumn key={column.key}>{column.label}</TableColumn>
             )}
           </TableHeader>
-          <TableBody items={rows}>
+          <TableBody
+            isLoading={isLoading}
+            loadingContent={<Spinner>Loading...</Spinner>}
+            items={popular}
+          >
             {(item) => (
-              <TableRow key={item.key}>
+              <TableRow key={item._id}>
                 {(columnKey) => (
-                  <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                  <TableCell>
+                    {columnKey === "creator.name"
+                      ? item.creator.name
+                      : getKeyValue(item, columnKey)}
+                  </TableCell>
                 )}
               </TableRow>
             )}
@@ -235,25 +138,24 @@ export function Page() {
       <h1 className="text-3xl font-bold">Tags</h1>
       <div className="my-10 rounded-large bg-white p-6 shadow-small dark:bg-[#191a1b]">
         <div className="flex flex-wrap gap-3">
-          {tags.map((tag) => (
-            <Button
-              size="sm"
-              variant="solid"
-              key={crypto.randomUUID()}
-              onPress={() => navigate(`/search?tag=${tag.name}`)}
-            >
-              <div
-                className="flex cursor-pointer items-center text-sm"
-                key={tag.name}
-              >
-                <TagIcon size={tag.count >= 10 ? 16 : 12} className="mr-1" />
-                {tag.name}
-                <span className="ml-1.5 rounded-full bg-white px-1.5 py-0.5 text-xs dark:bg-[#191a1b]">
-                  {tag.count}
-                </span>
-              </div>
-            </Button>
-          ))}
+          {tagsData ? (
+            tagsData.data.map((tag: { _id: string; count: number }) => (
+              <Button size="sm" variant="solid" key={crypto.randomUUID()}>
+                <div
+                  className="flex cursor-pointer items-center text-sm"
+                  key={tag._id}
+                >
+                  <TagIcon size={tag.count >= 10 ? 16 : 12} className="mr-1" />
+                  {tag._id}
+                  <span className="ml-1.5 rounded-full bg-white px-1.5 py-0.5 text-xs dark:bg-[#191a1b]">
+                    {tag.count}
+                  </span>
+                </div>
+              </Button>
+            ))
+          ) : (
+            <Spinner>Loading...</Spinner>
+          )}
         </div>
       </div>
     </>

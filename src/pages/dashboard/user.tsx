@@ -1,8 +1,8 @@
 import { Spinner } from "@heroui/react";
 import { useState } from "react";
 import { useGetUserTemplatesQuery } from "../../shared/api/templateApi";
-import type { sortQuery, View } from "../../entities";
 import { GridTempaltes, TableTemplates, Toolbar } from "../../widgets";
+import type { sortQuery, View } from "../../entities";
 
 export function UserDashboard() {
   const [sortQuery, setSortQuery] = useState<sortQuery>("");
