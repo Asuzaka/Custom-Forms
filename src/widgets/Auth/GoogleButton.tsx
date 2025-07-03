@@ -1,6 +1,8 @@
 import { addToast } from "@heroui/react";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { api } from "../../shared/api/authApi";
 
 declare global {
   interface Window {
@@ -10,6 +12,7 @@ declare global {
 
 export function GoogleLoginButton() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const initializeGoogleAuth = () => {
@@ -66,8 +69,7 @@ export function GoogleLoginButton() {
         throw new Error(errorData.message || "Authentication failed");
       }
 
-      const data = await res.json();
-      console.log(data);
+      dispatch(api.util.invalidateTags(["user"]));
       navigate("/dashboard");
       addToast({
         title: "Success",
@@ -76,7 +78,6 @@ export function GoogleLoginButton() {
         color: "success",
       });
     } catch (error) {
-      console.error("Google authentication error:", error);
       addToast({
         title: "Error",
         color: "danger",
