@@ -11,6 +11,7 @@ export type { UserReg } from "./auth/signup";
 // Error entities
 export type { CustomErrorData } from "./error/error";
 // Dashboard entities
+export type { HomePageColumns } from "./Dashboard/columns";
 export type { View } from "./Dashboard/view";
 export type { Statistics } from "./Dashboard/statistics";
 export type { Form } from "./Dashboard/form";

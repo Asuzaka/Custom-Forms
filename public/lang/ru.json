@@ -1,0 +1,16 @@
+{
+    "general": {
+        "app": "Пользовательские формы",
+        "loading": "Загрузка..."
+    },
+    "homepage": {
+        "latestTemplates": "Последние шаблоны",
+        "popularTemplates": {
+            "root": "Популярные шаблоны",
+            "title": "Название",
+            "author": "Автор",
+            "likes": "Лайки"
+        },
+        "tags": "Теги"
+    }
+}

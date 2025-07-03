@@ -1,3 +1,14 @@
+import { Calendar, TagIcon, User } from "lucide-react";
+import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { getHomePageColumns } from "../../shared/constants/Dashboard";
+import type { FullTemplate } from "../../entities";
+import {
+  useGetLatestTemplatesQuery,
+  useGetPopularTemplatesQuery,
+  useGetTagsQuery,
+} from "../../shared/api/templateApi";
 import {
   Card,
   Image,
@@ -14,37 +25,14 @@ import {
   Spinner,
 } from "@heroui/react";
 
-import { Calendar, TagIcon, User } from "lucide-react";
-import { useNavigate } from "react-router";
-import {
-  useGetLatestTemplatesQuery,
-  useGetPopularTemplatesQuery,
-  useGetTagsQuery,
-} from "../../shared/api/templateApi";
-import { useEffect, useState } from "react";
-import type { FullTemplate } from "../../entities";
-
-const columns = [
-  {
-    key: "title",
-    label: "Title",
-  },
-  {
-    key: "creator.name",
-    label: "Author",
-  },
-  {
-    key: "likes",
-    label: "Likes",
-  },
-];
-
 export function Page() {
   const navigate = useNavigate();
   const [popular, setPopular] = useState<FullTemplate[]>([]);
   const { data: templatesData } = useGetLatestTemplatesQuery();
   const { data: popularData, isLoading } = useGetPopularTemplatesQuery();
   const { data: tagsData } = useGetTagsQuery();
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (popularData) {
@@ -54,7 +42,9 @@ export function Page() {
 
   return (
     <>
-      <h1 className="mt-10 text-3xl font-bold">Latest Templates</h1>
+      <h1 className="mt-10 text-3xl font-bold">
+        {t("homepage.latestTemplates")}
+      </h1>
       <div className="grid grid-cols-3 gap-5 py-10">
         {templatesData ? (
           templatesData.data.map((template, index) => (
@@ -105,20 +95,22 @@ export function Page() {
             </Card>
           ))
         ) : (
-          <Spinner>Loading...</Spinner>
+          <Spinner>{t("general.loading")}</Spinner>
         )}
       </div>
-      <h1 className="text-3xl font-bold">Popular Templates</h1>
+      <h1 className="text-3xl font-bold">
+        {t("homepage.popularTemplates.root")}
+      </h1>
       <div className="py-10">
         <Table aria-label="Example table with dynamic content">
-          <TableHeader columns={columns}>
+          <TableHeader columns={getHomePageColumns(t)}>
             {(column) => (
               <TableColumn key={column.key}>{column.label}</TableColumn>
             )}
           </TableHeader>
           <TableBody
             isLoading={isLoading}
-            loadingContent={<Spinner>Loading...</Spinner>}
+            loadingContent={<Spinner>{t("general.loading")}</Spinner>}
             items={popular}
           >
             {(item) => (
@@ -135,7 +127,7 @@ export function Page() {
           </TableBody>
         </Table>
       </div>
-      <h1 className="text-3xl font-bold">Tags</h1>
+      <h1 className="text-3xl font-bold">{t("homepage.tags")}</h1>
       <div className="my-10 rounded-large bg-white p-6 shadow-small dark:bg-[#191a1b]">
         <div className="flex flex-wrap gap-3">
           {tagsData ? (
@@ -154,7 +146,7 @@ export function Page() {
               </Button>
             ))
           ) : (
-            <Spinner>Loading...</Spinner>
+            <Spinner>{t("general.loading")}</Spinner>
           )}
         </div>
       </div>

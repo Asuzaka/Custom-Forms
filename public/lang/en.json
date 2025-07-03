@@ -1,0 +1,16 @@
+{
+    "general": {
+        "app": "Custom Forms",
+        "loading": "Loading..."
+    },
+    "homepage":{
+        "latestTemplates": "Latest Templaes",
+        "popularTemplates": {
+            "root": "Popular Templates",
+            "title": "Title",
+            "author": "Author",
+            "likes": "Likes"
+        },    
+        "tags": "Tags"
+    }
+}

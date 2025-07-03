@@ -1,0 +1,16 @@
+{
+    "general": {
+        "app": "Maxsus shakllar",
+        "loading": "Yuklanmoqda..."
+    },
+    "homepage": {
+        "latestTemplates": "Soʻnggi shablonlar",
+        "popularTemplates": {
+            "root": "Mashhur shablonlar",
+            "title": "Sarlavha",
+            "author": "Muallif",
+            "likes": "Layklar"
+        },
+        "tags": "Teglar"
+    }
+}

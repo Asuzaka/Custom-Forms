@@ -79,10 +79,11 @@ export function Widget() {
     }
     setSelectedLang(new Set([Key]));
     localStorage.setItem("language", Key);
+    loadLanguage(Key);
   };
 
   useEffect(() => {
-    const storedKey = localStorage.getItem("langauage");
+    const storedKey = localStorage.getItem("language");
     if (!storedKey) return;
     loadLanguage(storedKey);
   }, []);

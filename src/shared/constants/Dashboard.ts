@@ -1,4 +1,5 @@
-import type { Sort } from "../../entities";
+import type { HomePageColumns, Sort } from "../../entities";
+import type { TFunction } from "i18next";
 
 export const sort: Sort[] = [
   { id: 0, name: "default", query: "" },
@@ -12,4 +13,10 @@ export const sort: Sort[] = [
     name: "sort by title",
     query: "title",
   },
+];
+
+export const getHomePageColumns = (t: TFunction): HomePageColumns[] => [
+  { key: "title", label: t("homepage.popularTemplates.title") },
+  { key: "creator.name", label: t("homepage.popularTemplates.author") },
+  { key: "likes", label: t("homepage.popularTemplates.likes") },
 ];
