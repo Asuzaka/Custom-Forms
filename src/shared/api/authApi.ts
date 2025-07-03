@@ -101,6 +101,7 @@ export const {
   useResetMutation,
   useForgetMutation,
   useVerifyMutation,
+  useLazySignoutQuery,
   useLazyAuthenticatedQuery,
   useSignoutQuery,
   useSignupMutation,

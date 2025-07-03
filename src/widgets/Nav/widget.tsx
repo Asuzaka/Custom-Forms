@@ -39,9 +39,12 @@ import { SearchWithButton } from "./search";
 import type { RootState } from "../../store/store";
 import type { Lang } from "../../entities";
 import { loadLanguage } from "../../shared/lib/i18n";
+import { useLazySignoutQuery } from "../../shared/api/authApi";
 
 export function Widget() {
   const dispatch = useDispatch();
+  const [triggerSignout] = useLazySignoutQuery();
+
   const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
   const [selectedLang, setSelectedLang] = useState<Set<string>>(() => {
@@ -52,6 +55,15 @@ export function Widget() {
   const previousSelectedKey = [...selectedLang][0];
   const { theme, setTheme } = useTheme();
   const [isSelected, setIsSelected] = useState(theme === "dark" ? true : false);
+
+  const handleLogut = async () => {
+    try {
+      await triggerSignout();
+    } catch {
+      // RTK HANDLEs
+    }
+    dispatch(logout());
+  };
 
   const handleSelectionChange = (keys: Selection) => {
     if (keys === "all") return;
@@ -183,11 +195,15 @@ export function Widget() {
               </>
             )}
 
-            <DropdownItem textValue="dashboard" key="help_and_feedback">
-              Help & Feedback
+            <DropdownItem
+              onPress={() => navigate("/forgetPassword")}
+              textValue="dashboard"
+              key="forget"
+            >
+              Forgot Password?
             </DropdownItem>
             <DropdownItem
-              onPress={() => dispatch(logout())}
+              onPress={handleLogut}
               textValue="dashboard"
               key="logout"
               color="danger"
