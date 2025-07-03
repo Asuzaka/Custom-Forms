@@ -1,7 +1,18 @@
 {
     "general": {
         "app": "Custom Forms",
-        "loading": "Loading..."
+        "loading": "Loading...",
+        "en": "En",
+        "ru": "Ru",
+        "uz": "Uz"
+    },
+    "nav": {
+        "notsigned": "You are not signed in",
+        "signin": "Sign in",
+        "signedin": "Signed in as",
+        "dashboard": "Dashboard",
+        "forgetPassword": "Forgot Password?",
+        "signout": "Sign out"
     },
     "homepage":{
         "latestTemplates": "Latest Templaes",

@@ -1,16 +1,27 @@
 {
-    "general": {
-        "app": "Пользовательские формы",
-        "loading": "Загрузка..."
+  "general": {
+    "app": "Пользовательские формы",
+    "loading": "Загрузка...",
+    "en": "Анг",
+    "ru": "Рус",
+    "uz": "Узб"
+  },
+  "nav": {
+    "notsigned": "Вы не вошли в систему",
+    "signin": "Войти",
+    "signedin": "Вы вошли как",
+    "dashboard": "Панель управления",
+    "forgetPassword": "Забыли пароль?",
+    "signout": "Выйти"
+  },
+  "homepage": {
+    "latestTemplates": "Последние шаблоны",
+    "popularTemplates": {
+      "root": "Популярные шаблоны",
+      "title": "Название",
+      "author": "Автор",
+      "likes": "Лайки"
     },
-    "homepage": {
-        "latestTemplates": "Последние шаблоны",
-        "popularTemplates": {
-            "root": "Популярные шаблоны",
-            "title": "Название",
-            "author": "Автор",
-            "likes": "Лайки"
-        },
-        "tags": "Теги"
-    }
+    "tags": "Теги"
+  }
 }

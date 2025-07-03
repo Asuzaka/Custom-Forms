@@ -1,16 +1,27 @@
 {
-    "general": {
-        "app": "Maxsus shakllar",
-        "loading": "Yuklanmoqda..."
+  "general": {
+    "app": "Maxsus shakllar",
+    "loading": "Yuklanmoqda...",
+    "en": "Ingliz",
+    "ru": "Rus",
+    "uz": "O‘zb"
+  },
+  "nav": {
+    "notsigned": "Siz tizimga kirmagansiz",
+    "signin": "Kirish",
+    "signedin": "Tizimga kirgan foydalanuvchi:",
+    "dashboard": "Boshqaruv paneli",
+    "forgetPassword": "Parolni unutdingizmi?",
+    "signout": "Chiqish"
+  },
+  "homepage": {
+    "latestTemplates": "So‘nggi shablonlar",
+    "popularTemplates": {
+      "root": "Ommabop shablonlar",
+      "title": "Sarlavha",
+      "author": "Muallif",
+      "likes": "Layklar"
     },
-    "homepage": {
-        "latestTemplates": "Soʻnggi shablonlar",
-        "popularTemplates": {
-            "root": "Mashhur shablonlar",
-            "title": "Sarlavha",
-            "author": "Muallif",
-            "likes": "Layklar"
-        },
-        "tags": "Teglar"
-    }
+    "tags": "Teglar"
+  }
 }

@@ -1,4 +1,16 @@
 import { MoonIcon, NotebookPenIcon, SunMediumIcon } from "lucide-react";
+import { useNavigate } from "react-router";
+import { useTheme } from "@heroui/use-theme";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/userSlice";
+import { SearchWithButton } from "./search";
+import { loadLanguage } from "../../shared/lib/i18n";
+import { useLazySignoutQuery } from "../../shared/api/authApi";
+import { useTranslation } from "react-i18next";
+import { getLanguages } from "../../shared/constants/Dashboard";
+import type { RootState } from "../../store/store";
+import type { Lang } from "../../entities";
 import {
   Navbar,
   NavbarBrand,
@@ -14,34 +26,9 @@ import {
   type SelectedItems,
   type Selection,
 } from "@heroui/react";
-import { useNavigate } from "react-router";
-
-const langs: Lang[] = [
-  {
-    key: "ru",
-    name: "Ru",
-  },
-  {
-    key: "uz",
-    name: "Uz",
-  },
-  {
-    key: "en",
-    name: "En",
-  },
-];
-
-import { useTheme } from "@heroui/use-theme";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../store/userSlice";
-import { SearchWithButton } from "./search";
-import type { RootState } from "../../store/store";
-import type { Lang } from "../../entities";
-import { loadLanguage } from "../../shared/lib/i18n";
-import { useLazySignoutQuery } from "../../shared/api/authApi";
 
 export function Widget() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [triggerSignout] = useLazySignoutQuery();
 
@@ -49,8 +36,9 @@ export function Widget() {
   const navigate = useNavigate();
   const [selectedLang, setSelectedLang] = useState<Set<string>>(() => {
     const storedKey = localStorage.getItem("language");
-    const isValidKey = storedKey && langs.some((l) => l.key === storedKey);
-    return new Set([isValidKey ? storedKey : langs[0].key]);
+    const isValidKey =
+      storedKey && getLanguages(t).some((l) => l.key === storedKey);
+    return new Set([isValidKey ? storedKey : getLanguages(t)[0].key]);
   });
   const previousSelectedKey = [...selectedLang][0];
   const { theme, setTheme } = useTheme();
@@ -84,8 +72,11 @@ export function Widget() {
 
   useEffect(() => {
     const storedKey = localStorage.getItem("language");
-    if (!storedKey) return;
-    loadLanguage(storedKey);
+    if (!storedKey) {
+      loadLanguage([...selectedLang][0]);
+    } else {
+      loadLanguage(storedKey);
+    }
   }, []);
 
   return (
@@ -96,7 +87,9 @@ export function Widget() {
           onClick={() => navigate("/")}
         >
           <NotebookPenIcon />
-          <p className="hidden font-bold text-inherit sm:block">Custom Forms</p>
+          <p className="hidden font-bold text-inherit sm:block">
+            {t("general.app")}
+          </p>
         </NavbarBrand>
 
         <SearchWithButton />
@@ -115,7 +108,7 @@ export function Widget() {
           size="lg"
           startContent={<SunMediumIcon color="yellow" />}
         />
-        {/* --- */}
+
         <Select
           aria-label="language"
           selectedKeys={selectedLang}
@@ -124,7 +117,7 @@ export function Widget() {
             base: "max-w-[70px]",
             trigger: "h-10",
           }}
-          items={langs}
+          items={getLanguages(t)}
           renderValue={(items: SelectedItems<Lang>) => {
             return items.map((item) => (
               <div key={item.key} className="flex items-center gap-2">
@@ -141,7 +134,6 @@ export function Widget() {
             </SelectItem>
           )}
         </Select>
-        {/* --- */}
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar
@@ -152,9 +144,8 @@ export function Widget() {
               name={user?.name}
               size="sm"
               src={
-                user === null
-                  ? `${import.meta.env.VITE_BACKEND_URL}/public/users/default.png`
-                  : user?.photo
+                user?.photo ??
+                "https://hxfqjxaynywivthkixwq.supabase.co/storage/v1/object/public/images//default.png"
               }
             />
           </DropdownTrigger>
@@ -166,14 +157,14 @@ export function Widget() {
                   key="profile"
                   className="h-14 gap-2"
                 >
-                  <p className="font-semibold">You are not signed in</p>
+                  <p className="font-semibold">{t("nav.notsigned")}</p>
                 </DropdownItem>
                 <DropdownItem
                   textValue="signin"
                   onPress={() => navigate("/signin")}
                   key="signin"
                 >
-                  Sign in
+                  {t("nav.signin")}
                 </DropdownItem>
               </>
             ) : (
@@ -183,7 +174,7 @@ export function Widget() {
                   key="profile"
                   className="h-14 gap-2"
                 >
-                  <p className="font-semibold">Signed in as</p>
+                  <p className="font-semibold">{t("nav.signedin")}</p>
                   <p className="font-semibold">{user?.email}</p>
                 </DropdownItem>
                 <DropdownItem
@@ -191,7 +182,7 @@ export function Widget() {
                   onPress={() => navigate("/dashboard")}
                   key="dashboard"
                 >
-                  Dashboard
+                  {t("nav.dashboard")}
                 </DropdownItem>
               </>
             )}
@@ -201,7 +192,7 @@ export function Widget() {
               textValue="dashboard"
               key="forget"
             >
-              Forgot Password?
+              {t("nav.forgetPassword")}
             </DropdownItem>
             <DropdownItem
               onPress={handleLogut}
@@ -209,7 +200,7 @@ export function Widget() {
               key="logout"
               color="danger"
             >
-              Sign out
+              {t("nav.signout")}
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

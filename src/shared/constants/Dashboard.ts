@@ -1,4 +1,4 @@
-import type { HomePageColumns, Sort } from "../../entities";
+import type { HomePageColumns, Lang, Sort } from "../../entities";
 import type { TFunction } from "i18next";
 
 export const sort: Sort[] = [
@@ -12,6 +12,21 @@ export const sort: Sort[] = [
     id: 3,
     name: "sort by title",
     query: "title",
+  },
+];
+
+export const getLanguages = (t: TFunction): Lang[] => [
+  {
+    key: "en",
+    name: t("general.en"),
+  },
+  {
+    key: "ru",
+    name: t("general.ru"),
+  },
+  {
+    key: "uz",
+    name: t("general.uz"),
   },
 ];
 
