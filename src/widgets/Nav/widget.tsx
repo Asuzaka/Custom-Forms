@@ -25,23 +25,30 @@ const langs: Lang[] = [
     key: "uz",
     name: "Uz",
   },
+  {
+    key: "en",
+    name: "En",
+  },
 ];
 
 import { useTheme } from "@heroui/use-theme";
-import type { Lang } from "../../entities";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../store/store";
 import { logout } from "../../store/userSlice";
 import { SearchWithButton } from "./search";
+import type { RootState } from "../../store/store";
+import type { Lang } from "../../entities";
+import { loadLanguage } from "../../shared/lib/i18n";
 
 export function Widget() {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
-  const [selectedLang, setSelectedLang] = useState<Set<string>>(
-    new Set(["uz"]),
-  );
+  const [selectedLang, setSelectedLang] = useState<Set<string>>(() => {
+    const storedKey = localStorage.getItem("language");
+    const isValidKey = storedKey && langs.some((l) => l.key === storedKey);
+    return new Set([isValidKey ? storedKey : langs[0].key]);
+  });
   const previousSelectedKey = [...selectedLang][0];
   const { theme, setTheme } = useTheme();
   const [isSelected, setIsSelected] = useState(theme === "dark" ? true : false);
@@ -51,12 +58,23 @@ export function Widget() {
 
     const newKey = [...keys][0];
 
+    let Key: string;
+
     if (!newKey || newKey === previousSelectedKey) {
-      setSelectedLang(new Set([previousSelectedKey]));
+      Key = previousSelectedKey;
     } else {
-      setSelectedLang(new Set([String(newKey)]));
+      Key = newKey as string;
     }
+    setSelectedLang(new Set([Key]));
+    localStorage.setItem("language", Key);
   };
+
+  useEffect(() => {
+    const storedKey = localStorage.getItem("langauage");
+    if (!storedKey) return;
+    loadLanguage(storedKey);
+  }, []);
+
   return (
     <Navbar isBordered>
       <NavbarContent justify="start">
