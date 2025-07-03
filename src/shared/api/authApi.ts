@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { User } from "../../entities";
+import type { User, UserReg } from "../../entities";
 import { env } from "../config";
 
 export const api = createApi({
@@ -15,6 +15,13 @@ export const api = createApi({
     >({
       query: (user) => ({
         url: "/signin",
+        method: "POST",
+        body: user,
+      }),
+    }),
+    signup: builder.mutation<{ user: User }, UserReg>({
+      query: (user) => ({
+        url: "/signup",
         method: "POST",
         body: user,
       }),
@@ -64,6 +71,7 @@ export const {
   useVerifyQuery,
   useLazyAuthenticatedQuery,
   useSignoutQuery,
+  useSignupMutation,
   useSigninMutation,
   useAuthenticatedQuery,
 } = api;

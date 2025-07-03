@@ -2,6 +2,7 @@
 export type { Lang } from "./Nav/Languages";
 // Authentification entites
 export type { User } from "./auth/user";
+export type { UserReg } from "./auth/signup";
 // Error entities
 export type { CustomErrorData } from "./error/error";
 // Dashboard entities
