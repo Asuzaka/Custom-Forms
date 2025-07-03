@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { addToast, Button, Form, Input, Link } from "@heroui/react";
 import { GitHubLoginButton, GoogleLoginButton } from "../../widgets";
-import validator from "validator";
 import { useSignupMutation } from "../../shared/api/authApi";
 import type { UserReg } from "../../entities";
+import validator from "validator";
 
 export function SignUp() {
   const [signup, { isLoading, isSuccess, error }] = useSignupMutation();
@@ -37,6 +37,7 @@ export function SignUp() {
         title: "Error",
         description: (error as { error: string }).error,
         timeout: 3000,
+        color: "danger",
       });
     }
   }, [error]);

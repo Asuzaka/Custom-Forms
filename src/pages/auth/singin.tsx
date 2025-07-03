@@ -26,6 +26,7 @@ export function SignIn() {
         title: "Error",
         description: (error as { error: string }).error,
         timeout: 3000,
+        color: "danger",
       });
   }, [error]);
 
