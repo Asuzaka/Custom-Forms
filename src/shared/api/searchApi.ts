@@ -52,5 +52,6 @@ export const {
   useGetStatisticsQuery,
   useSearchTagsQuery,
   useSearchUsersQuery,
-  useSearchTempaltesQuery,
+  useLazySearchUsersQuery,
+  useLazySearchTempaltesQuery,
 } = api;

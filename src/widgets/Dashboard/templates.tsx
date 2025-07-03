@@ -19,6 +19,7 @@ import {
   useDeleteTemplatesMutation,
   useGetAllTemplatesQuery,
 } from "../../shared/api/templateApi";
+import { useLazySearchTempaltesQuery } from "../../shared/api/searchApi";
 
 function getSelectedTempalteIds(
   selectedKeys: Selection,
@@ -44,6 +45,24 @@ export function TemplateTable() {
 
   const { data, isLoading } = useGetAllTemplatesQuery("");
 
+  const [triggerSearchTemplates, { isLoading: isFetching }] =
+    useLazySearchTempaltesQuery();
+
+  useEffect(() => {
+    if (!query) {
+      if (data) setRows(data.data.templates);
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      triggerSearchTemplates(query)
+        .unwrap()
+        .then((res) => setRows(res.data));
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [data, query, triggerSearchTemplates]);
+
   function handleDelete() {
     const templatesIds = getSelectedTempalteIds(selectedKeys, rows);
     if (templatesIds.length === 0) return;
@@ -59,18 +78,6 @@ export function TemplateTable() {
     });
     setSelectedKeys(new Set([]));
   }
-
-  useEffect(() => {
-    if (!query) {
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      // Replace this with your real API call
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [query]);
 
   useEffect(() => {
     if (!data) return;
@@ -117,7 +124,7 @@ export function TemplateTable() {
         </TableHeader>
         <TableBody
           emptyContent={"No templates to display."}
-          isLoading={isLoading}
+          isLoading={isLoading || isFetching}
           items={rows}
           loadingContent={<Spinner label="Loading..." />}
         >

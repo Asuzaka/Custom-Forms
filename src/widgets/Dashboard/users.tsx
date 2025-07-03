@@ -30,6 +30,7 @@ import {
   Trash2,
   User as UserIcon,
 } from "lucide-react";
+import { useLazySearchUsersQuery } from "../../shared/api/searchApi";
 
 function getSelectedUserIds(
   selectedKeys: Selection,
@@ -58,6 +59,24 @@ export function UsersTable() {
   const [changeToUser] = useChangeToUserMutation();
   const [deleteUsers] = useDeleteUserMutation();
   const [rows, setRows] = useState<User[]>([]);
+
+  const [triggerSearchUsers, { isLoading: Fetching }] =
+    useLazySearchUsersQuery();
+
+  useEffect(() => {
+    if (!query) {
+      if (data) setRows(data.data.users);
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      triggerSearchUsers(query)
+        .unwrap()
+        .then((res) => setRows(res.data));
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [data, query, triggerSearchUsers]);
 
   function handleBlock() {
     const userIds = getSelectedUserIds(selectedKeys, rows);
@@ -93,18 +112,6 @@ export function UsersTable() {
     deleteUsers({ users: userIds });
     setSelectedKeys(new Set([]));
   }
-
-  useEffect(() => {
-    if (!query) {
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      // Replace this with your real API call
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [query]);
 
   useEffect(() => {
     if (!data) return;
@@ -166,7 +173,7 @@ export function UsersTable() {
         </TableHeader>
         <TableBody
           emptyContent={"No users to display."}
-          isLoading={isLoading}
+          isLoading={isLoading || Fetching}
           items={rows}
           loadingContent={<Spinner label="Loading..." />}
         >
