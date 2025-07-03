@@ -3,6 +3,7 @@ export { Page as Home } from "./home/page";
 // Auth
 export { SignUp } from "./auth/signup";
 export { SignIn } from "./auth/singin";
+export { Verify } from "./auth/verify";
 export { GitHubCallback } from "./auth/githubcallback";
 // Dashboard
 export { Dashboard } from "../shared/components/Dashboard";

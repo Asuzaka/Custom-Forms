@@ -15,6 +15,7 @@ import {
   Template,
   NewTemplate,
   FormPage,
+  Verify,
 } from "./pages/index.ts";
 import { route } from "./shared/constants/route.ts";
 import { Protected } from "./shared/components/Protected.tsx";
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: route.AUTH.SIGNIN.ROOT, element: <SignIn /> },
       { path: route.AUTH.SIGNUP.ROOT, element: <SignUp /> },
+      { path: route.AUTH.VERIFY.ROOT, element: <Verify /> },
       {
         path: route.DASHBOARD.ROOT,
         element: (
