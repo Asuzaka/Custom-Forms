@@ -1,3 +1,4 @@
+import { addToast } from "@heroui/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
@@ -9,21 +10,39 @@ declare global {
 
 export function GoogleLoginButton() {
   const navigate = useNavigate();
-  useEffect(() => {
-    if (window.google) {
-      window.google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID, // Replace with your real client ID
-        callback: handleCredentialResponse,
-      });
 
-      window.google.accounts.id.renderButton(
-        document.getElementById("google-button"),
-        {
-          theme: "outline",
-          size: "large",
-        },
-      );
+  useEffect(() => {
+    const initializeGoogleAuth = () => {
+      if (window.google) {
+        window.google.accounts.id.initialize({
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+          callback: handleCredentialResponse,
+          ux_mode: "popup",
+        });
+
+        window.google.accounts.id.renderButton(
+          document.getElementById("google-button"),
+          {
+            theme: "outline",
+            size: "large",
+            text: "continue_with",
+            shape: "rectangular",
+          },
+        );
+      }
+    };
+
+    if (!window.google) {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.onload = initializeGoogleAuth;
+      document.body.appendChild(script);
+    } else {
+      initializeGoogleAuth();
     }
+
+    return () => {};
   }, []);
 
   async function handleCredentialResponse(response: { credential: string }) {
@@ -42,17 +61,33 @@ export function GoogleLoginButton() {
         },
       );
 
-      const data = await res.json();
-
-      if (res.ok) {
-        navigate("/dashboard");
-      } else {
-        alert(data.message || "Login failed");
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Authentication failed");
       }
-    } catch {
-      alert("Something went wrong. Try again.");
+
+      const data = await res.json();
+      console.log(data);
+      navigate("/dashboard");
+      addToast({
+        title: "Success",
+        description: "Logged in successfully!",
+        timeout: 3000,
+        color: "success",
+      });
+    } catch (error) {
+      console.error("Google authentication error:", error);
+      addToast({
+        title: "Error",
+        color: "danger",
+        timeout: 3000,
+        description:
+          error instanceof Error
+            ? error.message
+            : "Login failed. Please try again.",
+      });
     }
   }
 
-  return <div id="google-button"></div>;
+  return <div id="google-button" className="w-full"></div>;
 }
