@@ -4,6 +4,7 @@ export { Page as Home } from "./home/page";
 export { SignUp } from "./auth/signup";
 export { SignIn } from "./auth/singin";
 export { Verify } from "./auth/verify";
+export { ResetPassword } from "./auth/resetpassword";
 export { ForgetPassword } from "./auth/forgetpassword";
 export { GitHubCallback } from "./auth/githubcallback";
 // Dashboard

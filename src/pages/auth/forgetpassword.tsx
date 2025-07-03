@@ -40,9 +40,8 @@ export function ForgetPassword() {
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-col gap-5 py-25">
         <h1 className="py-3 text-center text-4xl font-extrabold">
-          Reset Passowrd
+          Forget Passord
         </h1>
-
         <Form
           onSubmit={onSubmit}
           className="flex w-full max-w-xl flex-col gap-4"
