@@ -18,7 +18,7 @@ export function Template() {
 
   if (isLoading)
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex h-[90dvh] items-center justify-center">
         <Spinner>Loading...</Spinner>
       </div>
     );

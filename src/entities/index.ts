@@ -1,6 +1,6 @@
 // Navbar entities
 export type { Lang } from "./Nav/Languages";
-// Home entities
+// Search entities
 export type { globalSearchType } from "./search/global";
 // Home entities
 export type { FullTemplate } from "./home/template";
@@ -32,4 +32,4 @@ export type {
   TemplateQuestion,
 } from "./template/template";
 // Form entites
-export type { FormAnswer, FormObject } from "./form/form";
+export type { FormAnswer, FormObject, SubmittedForm } from "./form/form";

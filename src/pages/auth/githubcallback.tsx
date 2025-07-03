@@ -43,7 +43,7 @@ export function GitHubCallback() {
   }, [navigate]);
 
   return (
-    <div className="flex items-center justify-center text-lg">
+    <div className="flex h-[90dvh] items-center justify-center">
       <Spinner>Loading...</Spinner>
     </div>
   );

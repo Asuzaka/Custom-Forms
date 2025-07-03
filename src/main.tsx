@@ -18,6 +18,7 @@ import {
   Verify,
   ForgetPassword,
   ResetPassword,
+  SubmittedForm,
 } from "./pages/index.ts";
 import { route } from "./shared/constants/route.ts";
 import { Protected } from "./shared/components/Protected.tsx";
@@ -59,6 +60,14 @@ const router = createBrowserRouter([
         element: (
           <Protected>
             <FormPage />
+          </Protected>
+        ),
+      },
+      {
+        path: route.FORM.SUBMITTED,
+        element: (
+          <Protected>
+            <SubmittedForm />
           </Protected>
         ),
       },

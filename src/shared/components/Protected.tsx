@@ -8,7 +8,7 @@ export function Protected({ children }: { children: React.ReactNode }) {
 
   if (user.isLoading) {
     return (
-      <div className="flex items-center justify-between">
+      <div className="flex h-[90dvh] items-center justify-center">
         <Spinner>Loading...</Spinner>
       </div>
     );

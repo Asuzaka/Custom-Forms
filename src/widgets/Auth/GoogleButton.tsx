@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { api } from "../../shared/api/authApi";
+import { setUserLoading } from "../../store/userSlice";
 
 declare global {
   interface Window {
@@ -69,6 +70,7 @@ export function GoogleLoginButton() {
         throw new Error(errorData.message || "Authentication failed");
       }
 
+      dispatch(setUserLoading());
       dispatch(api.util.invalidateTags(["user"]));
       navigate("/dashboard");
       addToast({

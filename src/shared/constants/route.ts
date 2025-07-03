@@ -25,6 +25,7 @@ export const route = {
   },
   FORM: {
     ROOT: "/form/:id",
+    SUBMITTED: "/sform/:id",
   },
   GITHUB: {
     ROOT: "/github/callback",

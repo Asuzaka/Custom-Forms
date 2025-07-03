@@ -14,3 +14,18 @@ export type FormAnswer = {
   id: string;
   answer: string | string[];
 };
+
+export type SubmittedForm = {
+  _id: string;
+  user: string;
+  template: {
+    _id: string;
+    title: string;
+    description: string;
+    image: string;
+  };
+  creator: string;
+  title: string;
+  answers: FormAnswer[];
+  createdAt: Date;
+};

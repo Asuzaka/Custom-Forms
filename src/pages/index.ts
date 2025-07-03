@@ -14,6 +14,7 @@ export { Template } from "./template/template";
 export { NewTemplate } from "./template/newtemplate";
 // Form
 export { FormPage } from "./form/form";
+export { SubmittedForm } from "./form/submittedform";
 // Error
 export { ErrorFallback } from "./error/error";
 // 404

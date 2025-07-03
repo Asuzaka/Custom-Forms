@@ -28,7 +28,10 @@ export function Submissions({ id }: { id: string }) {
         >
           {data?.data
             ? data.data.map((each) => (
-                <TableRow onClick={() => navigate("/")} key={each._id}>
+                <TableRow
+                  onClick={() => navigate(`/sform/${each._id}`)}
+                  key={each._id}
+                >
                   <TableCell>{each.user?.name}</TableCell>
                   <TableCell>
                     {new Date(each.createdAt).toLocaleString()}
