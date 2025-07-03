@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { env } from "../config";
-import type { Statistics, TemplateObject, User } from "../../entities";
+import {
+  type globalSearchType,
+  type Statistics,
+  type TemplateObject,
+  type User,
+} from "../../entities";
 
 export const api = createApi({
   reducerPath: "searchApi",
@@ -9,13 +14,7 @@ export const api = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    globalSearch: builder.query<
-      {
-        results: { templates: number; tags: number };
-        data: { templates: TemplateObject[]; tags: TemplateObject[] };
-      },
-      string
-    >({
+    globalSearch: builder.query<{ data: globalSearchType }, string>({
       query: (data) => ({
         url: `/?q=${data}`,
         method: "GET",
@@ -49,7 +48,7 @@ export const api = createApi({
 });
 
 export const {
-  useGlobalSearchQuery,
+  useLazyGlobalSearchQuery,
   useGetStatisticsQuery,
   useSearchTagsQuery,
   useSearchUsersQuery,

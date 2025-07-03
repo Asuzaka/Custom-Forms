@@ -1,13 +1,28 @@
-import { Modal, ModalBody, ModalContent, useDisclosure } from "@heroui/react";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  Spinner,
+  useDisclosure,
+} from "@heroui/react";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLazyGlobalSearchQuery } from "../../shared/api/searchApi";
+import { useNavigate } from "react-router";
+import type { globalSearchType } from "../../entities";
 
 export function SearchWithButton() {
+  const navigate = useNavigate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const [triggerSearch, { isFetching }] = useLazyGlobalSearchQuery();
+
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState<globalSearchType>({
+    templates: [],
+    comments: [],
+    tags: [],
+  });
 
   // Open modal on Ctrl + K
   useEffect(() => {
@@ -23,31 +38,18 @@ export function SearchWithButton() {
 
   useEffect(() => {
     if (!query) {
-      setResults([]);
+      setResults({ templates: [], comments: [], tags: [] });
       return;
     }
 
     const timeout = setTimeout(() => {
-      setLoading(true);
-
-      // Replace this with your real API call
-      fakeSearch(query).then((res) => {
-        setResults(res);
-        setLoading(false);
-      });
+      triggerSearch(query)
+        .unwrap()
+        .then((res) => setResults(res.data));
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [query]);
-
-  const fakeSearch = async (input: string): Promise<string[]> => {
-    const allItems = ["apple", "banana", "orange", "grape", "watermelon"];
-    return new Promise((resolve) =>
-      setTimeout(() => {
-        resolve(allItems.filter((item) => item.includes(input.toLowerCase())));
-      }, 500),
-    );
-  };
+  }, [query, triggerSearch]);
 
   return (
     <>
@@ -78,29 +80,60 @@ export function SearchWithButton() {
                 </button>
               </div>
 
-              {loading && (
-                <div className="p-2 text-center text-sm text-gray-500">
-                  Loading...
-                </div>
-              )}
+              {isFetching && <Spinner>Loading...</Spinner>}
 
-              {!loading && results.length > 0 && (
-                <ul className="p-2">
-                  {results.map((item, index) => (
-                    <li
-                      key={index}
-                      className="py-1 text-gray-800 dark:text-white"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {!loading && query && results.length === 0 && (
-                <div className="p-2 text-sm text-gray-400">
-                  No results found
-                </div>
+              {!isFetching && (
+                <>
+                  <div>
+                    <h1>Comments:</h1>
+                    <ul className="p-2">
+                      {results.comments.map((item, index) => (
+                        <li
+                          onClick={() => navigate(`/template/${item.template}`)}
+                          key={index}
+                          className="py-1 text-gray-800 dark:text-white"
+                        >
+                          {item.text}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h1>Tags:</h1>
+                    <ul className="p-2">
+                      {results.tags.map((item, index) => (
+                        <div key={item.tag}>
+                          <h1>{item.tag}</h1>
+                          {item.templates.map((each) => (
+                            <li
+                              onProgress={() =>
+                                navigate(`/template/${each._id}`)
+                              }
+                              key={index}
+                              className="py-1 text-gray-800 dark:text-white"
+                            >
+                              {each.title}
+                            </li>
+                          ))}
+                        </div>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h1>Templates:</h1>
+                    <ul className="p-2">
+                      {results.templates.map((item, index) => (
+                        <li
+                          onClick={() => navigate(`/template/${item._id}`)}
+                          key={index}
+                          className="py-1 text-gray-800 dark:text-white"
+                        >
+                          {item.title}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
               )}
             </ModalBody>
           )}
