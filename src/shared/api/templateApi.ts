@@ -42,6 +42,12 @@ export const api = createApi({
         method: "GET",
       }),
       providesTags: (_, __, id) => [{ type: "Template", id }],
+      transformErrorResponse: (response: {
+        data: { message: string };
+        status: number;
+      }) => ({
+        status: response.status,
+      }),
     }),
 
     updateTemplate: builder.mutation<
