@@ -103,7 +103,7 @@ export function Comments({ templateId }: Props) {
     );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 py-4">
       {user && (
         <div className="mb-6">
           {showNewCommentForm ? (

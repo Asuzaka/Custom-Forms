@@ -84,7 +84,7 @@ export function NewTemplate({
 
   return (
     <>
-      <div className="flex flex-col justify-between gap-5 py-2">
+      <div className="flex flex-col justify-between gap-5 py-4">
         <TempalteHeader newTemplate={newTemplate} />
         {editor && (
           <TemplateTabs

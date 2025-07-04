@@ -40,7 +40,7 @@ export function TemplateBuilder({
   addNewQuestion,
 }: Props) {
   return (
-    <div className="rounded-lg px-2 py-2">
+    <div className="rounded-lg">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}

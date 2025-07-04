@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getHomePageColumns } from "../../shared/constants/Dashboard";
+import ReactMarkdown from "react-markdown";
 import type { FullTemplate } from "../../entities";
 import {
   useGetLatestTemplatesQuery,
@@ -68,18 +69,15 @@ export function Page() {
                 />
               </CardBody>
               <CardFooter>
-                <div className="flex w-full flex-col items-center gap-2">
-                  {/* Forms Theme */}
+                <div className="flex w-full flex-col items-center gap-2 py-1">
                   <h1 className="text-xl font-bold">{template.title}</h1>
-                  {/* Forms description */}
-                  <p className="font-thin">{template.description}</p>
-                  {/* Publisher */}
+                  <ReactMarkdown>{template.description}</ReactMarkdown>
                   <div className="flex flex-col items-center gap-2">
                     <div className="flex items-center gap-1">
                       <User />
                       <span>{template.creator.name}</span>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 py-2">
                       <Calendar />
                       <span>
                         {template.createdAt
@@ -88,8 +86,6 @@ export function Page() {
                       </span>
                     </div>
                   </div>
-                  {/* Tags */}
-                  <div></div>
                 </div>
               </CardFooter>
             </Card>

@@ -9,16 +9,16 @@ type Props = {
 
 export function TempalteHeader({ newTemplate }: Props) {
   return (
-    <div className="flex items-center justify-between rounded-lg border px-10 py-5">
-      <div className="flex flex-col">
+    <div className="flex flex-col items-center justify-between rounded-lg border px-10 py-5 sm:flex-row">
+      <div className="flex w-[80%] flex-col">
         <h1 className="text-3xl font-bold">{newTemplate.title}</h1>
         <ReactMarkdown>{newTemplate.description}</ReactMarkdown>
         <DescriptionLikes newTemplate={newTemplate} />
       </div>
-      <div>
+      <div className="sm:w-[30%]">
         <Image
           alt="forms-iamge"
-          width={200}
+          width={300}
           height={200}
           src={newTemplate.image}
         />
