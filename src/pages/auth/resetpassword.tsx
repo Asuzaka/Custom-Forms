@@ -23,11 +23,17 @@ export function ResetPassword() {
       any = true;
     }
 
+    const readyData = { token, ...data };
+
     if (any) return;
 
     try {
       await reset(
-        data as { token: string; password: string; passwordConfirm: string },
+        readyData as {
+          token: string;
+          password: string;
+          passwordConfirm: string;
+        },
       );
     } catch {
       // RTK HANDLES
@@ -69,32 +75,31 @@ export function ResetPassword() {
             name="token"
             value={token}
             labelPlacement="outside"
+            type="text"
           />
           <Input
             isRequired
-            errorMessage="Please enter a valid password"
             label="Password"
             labelPlacement="outside"
             name="password"
             placeholder="Enter new password"
             type="password"
             validate={(value: string) => {
-              if (value.length < 7) {
-                return "Passowd must be at least 3 characters long";
+              if (value.length < 8) {
+                return "Passowd must be at least 8 characters long";
               }
             }}
           />
           <Input
             isRequired
-            errorMessage="Please enter a valid password Confirm"
             label="Password Confirm"
             labelPlacement="outside"
             name="passwordConfirm"
             placeholder="Re-Enter new password"
             type="password"
             validate={(value: string) => {
-              if (value.length < 7) {
-                return "Passowd must be at least 3 characters long";
+              if (value.length < 8) {
+                return "Passowd must be at least 8 characters long";
               }
             }}
           />

@@ -63,7 +63,6 @@ export function SignUp() {
           >
             <Input
               isRequired
-              errorMessage="Please enter a valid Name"
               label="Name"
               labelPlacement="outside"
               name="name"
@@ -90,29 +89,27 @@ export function SignUp() {
             />
             <Input
               isRequired
-              errorMessage="Please enter a valid password"
               label="Password"
               labelPlacement="outside"
               name="password"
               placeholder="Enter password"
               type="password"
               validate={(value: string) => {
-                if (value.length < 7) {
-                  return "Passowd must be at least 3 characters long";
+                if (value.length < 8) {
+                  return "Passowd must be at least 8 characters long";
                 }
               }}
             />
             <Input
               isRequired
-              errorMessage="Please enter a valid password Confirm"
               label="Password Confirm"
               labelPlacement="outside"
               name="passwordConfirm"
               placeholder="Re-Enter password"
               type="password"
               validate={(value: string) => {
-                if (value.length < 7) {
-                  return "Passowd must be at least 3 characters long";
+                if (value.length < 8) {
+                  return "Passowd must be at least 8 characters long";
                 }
               }}
             />

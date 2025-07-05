@@ -82,7 +82,7 @@ export const api = createApi({
       { token: string; password: string; passwordConfirm: string }
     >({
       query: ({ token, ...data }) => ({
-        url: `/auth/resetPassword/${token}`,
+        url: `/resetPassword/${token}`,
         method: "POST",
         body: data,
       }),
