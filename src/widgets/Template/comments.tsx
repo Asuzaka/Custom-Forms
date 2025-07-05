@@ -5,6 +5,7 @@ import type { RootState } from "../../store/store";
 import { useEffect, useState } from "react";
 import { useSocket } from "../../shared/hooks/socketContext";
 import { useGetCommentByTemplateIdQuery } from "../../shared/api/commentApi";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 type Props = {
   templateId: string | undefined;
@@ -15,8 +16,7 @@ export function Comments({ templateId }: Props) {
   const { socket, isConnected } = useSocket();
 
   const { data, isLoading, refetch } = useGetCommentByTemplateIdQuery(
-    templateId || "",
-    { skip: !templateId },
+    templateId ?? skipToken,
   );
 
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);

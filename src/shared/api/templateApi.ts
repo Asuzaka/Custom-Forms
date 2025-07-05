@@ -33,6 +33,18 @@ export const api = createApi({
         method: "POST",
         body: data,
       }),
+      transformResponse: (response: {
+        status: string;
+        data: TemplateObject;
+      }) => {
+        return response.data;
+      },
+      transformErrorResponse: (response: {
+        data: { message: string };
+        status: number;
+      }) => ({
+        status: response.status,
+      }),
       invalidatesTags: ["Template"],
     }),
 
